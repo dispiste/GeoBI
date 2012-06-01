@@ -26,6 +26,13 @@ App.queryBuilder = function(options) {
         for (i = 0; i < rows.length; i++) {
             addDimension(spatialBlock, rows[i]);
         }
+        if (i==0) {
+            // there is no spatial dimension, show the chooser
+            spatialChooser.show();
+        }
+        else {
+            spatialChooser.hide();
+        }
         for (i = 0; i < cols.length; i++) {
             addDimension(thematicBlock, cols[i]);
         }
@@ -68,6 +75,23 @@ App.queryBuilder = function(options) {
         block.doLayout();
     };
     
+    var spatialChooser = new App.DimensionChooser({
+        text: 'Add new dimension',
+        iconCls: 'add',
+        spatial: true,
+        listeners: {
+            'select': function(level) {
+                var dimension = App.cubeProperties
+                    .findLevelByUniqueName(level)
+                    .get('DIMENSION_UNIQUE_NAME');
+                App.queryMgr.addRowDimension(dimension, level);
+                // hide the chooser after adding a dimension in order
+                // to allow a single spatial dimension
+                spatialChooser.hide();
+            }
+        }
+    });
+
     /**
      * the spatial dimension chooser
      */
@@ -76,19 +100,7 @@ App.queryBuilder = function(options) {
             xtype: 'box',
             html: '<h3>Spatial dimensions</h3>'
         },
-            new App.DimensionChooser({
-                text: 'Add new dimension',
-                iconCls: 'add',
-                spatial: true,
-                listeners: {
-                    'select': function(level) {
-                        var dimension = App.cubeProperties
-                            .findLevelByUniqueName(level)
-                            .get('DIMENSION_UNIQUE_NAME');
-                        App.queryMgr.addRowDimension(dimension, level);
-                    }
-                }
-            })
+        spatialChooser
         ]
     });
 

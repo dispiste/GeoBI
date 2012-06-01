@@ -32,24 +32,41 @@ window.onload = function() {
     var leftHeader = {
             xtype: 'container',
             id: 'logo',
-            html: '<a href="whetever"><img alt="Cube viewer logo representing a rubick cube" src="app/images/oca_cube1.png" height="60" width="58" style="vertical-align:middle;"/></a><h1 style="font-size: 17px; display:inline-block; vertical-align:middle; padding-left:3px">OLAP CUBE VIEWER</h1>'
+            html: '<a href="http://www.espon.eu/"><img alt="Cube viewer logo representing a rubick cube" src="app/images/oca_cube1.png" height="60" width="58" style="vertical-align:middle;"/></a><h1 style="font-size: 17px; display:inline; vertical-align:middle;">OLAP CUBE VIEWER<span style="font-size:9px;font-weight:normal; "> BETA</span></h1>'
         };
     
     var globalFooter = {
             xtype: 'container',
-            cls: 'indented-block',
-            heigth: 200,
+            height: 20,
+            layout: 'fit',
             anchor: '0',
             items: [{
                 xtype: 'container',
-                html: '<div><span class="app-text">(C) UAB and CampToCamp. Source code available on <a href="https://github.com/dispiste/GeoBI" target="_blank">GitHub</a>.</span></div>'
+                html: '<div style="text-align: center"><span class="app-text">(C) UAB and ESPON M4D project. Part-financed by the European Regional Development Fund.</span></div>'
             }]
+        };
+    
+    var esponDisclaimer = {
+            xtype: 'container',
+            html: '<div class="espon-disclaimer centered-text">This map does not necessarily reflect the opinion of the ESPON Monitoring Committee. Part-financed by the European Regional Development Fund.</div>'
+        };
+    
+    var esponLogo = {
+            xtype: 'container',
+            html: '<div class="centered-text"><a href="http://www.espon.eu/"><img alt="European Spatial Planning Observation Network (ESPON) logo" src="app/images/ESPON_Logotxt_72dpi.jpg"/></a></div>'
+        };
+    
+    var uabLogo = {
+            xtype: 'container',
+            html: '<div class="centered-text"><a href="http://www.uab.cat/"><img alt="Logo of Autonomous University of Barcelona" src="app/images/uab-negro-marron_72dpi.jpg"/></a></div>'
         };
     
     var leftPanelItems = [
                       leftHeader,
                       App.queryBuilder.panel,
-                      App.report.panel
+                      App.report.panel,
+                      esponLogo,
+                      uabLogo
                   ];
     
     var layout = new Ext.Container({

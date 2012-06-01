@@ -22,20 +22,6 @@
             </Hierarchy>
         </Dimension>
 
-
-        <!-- This dimension is redundant with the previous one and its initial definition has been commented -->
-	<!--
-	<Dimension name="LAND COVER FLOWS 90-00 LEVEL 3" foreignKey="change_code">
-            <Hierarchy name="LCF_L3" hasAll="true" allMemberName="All Land Cover Flows" primaryKey="change_code" primaryKeyTable="change_codes_v13_3dates">
-                <Join leftKey="LCF" rightKey="LCF3_CODE">
-                  <Table name="change_codes_v13_3dates"/>
-                  <Table name="DEFS_LCF"/>
-                </Join>
-                <Level name="LCF LEVEL 3" table="DEFS_LCF" column="LCF3_NAME" uniqueMembers="true"/>
-            </Hierarchy>
-        </Dimension>
-	-->
-
         <Dimension name="LAND COVER 90">
             <Hierarchy name="CLC_90" hasAll="true" allMemberName="All Land Covers 90" primaryKey="change_code" primaryKeyTable="change_codes_v13_3dates">
                 <Join leftKey="lc1" rightKey="level3_code">
@@ -48,20 +34,6 @@
             </Hierarchy>
         </Dimension>
 
-
-        <!-- This dimension is redundant with the previous one and its initial definition has been commented -->
-	<!--
-        <Dimension name="LAND COVER 90 LEVEL 3" foreignKey="change_code">
-            <Hierarchy name="CLC_90_L3" hasAll="true" allMemberName="All Land Covers 90" primaryKey="change_code" primaryKeyTable="change_codes_v13_3dates">
-                <Join leftKey="LC1" rightKey="level3_code">
-                  <Table name="change_codes_v13_3dates"/>
-                  <Table name="defs_clc_06v13"/>
-                </Join>
-                <Level name="CLC90 LEVEL 3" table="defs_clc_06v13" column="l3_all" uniqueMembers="true"/>
-            </Hierarchy>
-        </Dimension>
-	-->
-
         <Dimension name="LAND COVER 00">
             <Hierarchy name="CLC_00" hasAll="true" allMemberName="All Land Covers 00" primaryKey="change_code" primaryKeyTable="change_codes_v13_3dates">
                 <Join leftKey="lc2" rightKey="level3_code">
@@ -73,20 +45,6 @@
                 <Level name="CLC00 LEVEL 3" table="defs_clc_06v13" column="l3_all" uniqueMembers="true"/>
             </Hierarchy>
         </Dimension>
-
-        <!-- This dimension is redundant with the previous one and its initial definition has been commented -->
-	<!--
-	<Dimension name="LAND COVER 00 LEVEL 3" foreignKey="change_code">
-            <Hierarchy name="CLC_00_L3" hasAll="true" allMemberName="All Land Covers 00" primaryKey="change_code" primaryKeyTable="change_codes_v13_3dates">
-                <Join leftKey="LC2" rightKey="level3_code">
-                  <Table name="change_codes_v13_3dates"/>
-                  <Table name="defs_clc_06v13"/>
-                </Join>
-                <Level name="CLC00 LEVEL 3" table="defs_clc_06v13" column="l3_all" uniqueMembers="true"/>
-            </Hierarchy>
-        </Dimension>
-	-->
-
 		<!-- Note that this definition uses the same tables and fields as  identical "LAND COVER 00".
 		     This is CORRECT, as the right foreign key on the fact table is layer chosen using the
 		     DimensionUsage element.
@@ -103,191 +61,159 @@
             </Hierarchy>
         </Dimension>
 
-	<!-- CMI commented for the moment
-        <Dimension name="LAND COVER 90 LEAC">
-            <Hierarchy name="CLC_90LEAC" hasAll="true" allMemberName="All Land Covers 90" primaryKey="change_code" primaryKeyTable="change_codes_v13_3dates">
-                <Join leftKey="lc1" rightKey="level3_code">
-                  <Table name="change_codes_v13_3dates"/>
-                  <Table name="defs_clc_06v13"/>
-                </Join>
-                <Level name="CLC90 LEVEL 1" table="defs_clc_06v13" column="l1b_all" uniqueMembers="false"/>
-                <Level name="CLC90 LEVEL 2" table="defs_clc_06v13" column="l2b_all" uniqueMembers="false"/>
-                <Level name="CLC90 LEVEL 3" table="defs_clc_06v13" column="l3_all" uniqueMembers="true"/>
-            </Hierarchy>
-        </Dimension>
-        
-	<Dimension name="LAND COVER 00 LEAC">
-            <Hierarchy name="CLC_00LEAC" hasAll="true" allMemberName="All Land Covers 00" primaryKey="change_code" primaryKeyTable="change_codes_v13_3dates">
-                <Join leftKey="lc2" rightKey="level3_code">
-                  <Table name="change_codes_v13_3dates"/>
-                  <Table name="defs_clc_06v13"/>
-                </Join>
-                <Level name="CLC00 LEVEL 1" table="defs_clc_06v13" column="l1b_all" uniqueMembers="false"/>
-                <Level name="CLC00 LEVEL 2" table="defs_clc_06v13" column="l2b_all" uniqueMembers="false"/>
-                <Level name="CLC00 LEVEL 3" table="defs_clc_06v13" column="l3_all" uniqueMembers="true"/>
-            </Hierarchy>
-        </Dimension>
-
-	<Dimension name="DOMINANT LAND COVER">
-            <Hierarchy name="DLT" hasAll="true" allMemberName="All Dominant Land Covers" primaryKey="DLT_ID">
-                <Table name="DEFS_DLT"/>
-                <Level name="EDOMINANT LAND COVER" table="DEFS_DLT" column="DLT_NM" uniqueMembers="true"/>
-            </Hierarchy>
-        </Dimension>
--->
     <!-- Here starts the definition of the cubes -->
 
     <Cube name="pg_CLC_90_00" enabled="true">
-        <Table name="espon_20072011" />
+        <Table name="es013_espon_june013_3" />
 
-        <Dimension name="NUTS 2006" foreignKey="nuts06_id">
-            <Hierarchy name="NUTS" hasAll="true" allMemberName="All NUTS" primaryKey="n3_id">
-                <Table name="defs_nuts_2006v13"/>
-                <Level name="NUTS 2006 LEVEL 0" table="defs_nuts_2006v13" column="n0_cdnem" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n0" type="Geometry" />
+        <Dimension name="NUTS 2010" foreignKey="prox_nuts10">
+            <Hierarchy name="NUTS 2010" hasAll="true" allMemberName="All NUTS 2010" primaryKey="id">
+                <Table name="es013_n10"/>
+                <Level name="NUTS 2010 LEVEL 0" table="es013_n10" column="n0c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l0" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2006 LEVEL 1" table="defs_nuts_2006v13" column="n1_cdnm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n1" type="Geometry" />
+                <Level name="NUTS 2010 LEVEL 1" table="es013_n10" column="n1c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l1" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2006 LEVEL 2" table="defs_nuts_2006v13" column="n2_cdnm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n2" type="Geometry" />
+                <Level name="NUTS 2010 LEVEL 2" table="es013_n10" column="n2c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l2" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2006 LEVEL 3" table="defs_nuts_2006v13" column="n3_cdnm" uniqueMembers="true">
-                    <Property name="geom" column="the_geom_n3" type="Geometry" />
+                <Level name="NUTS 2010 LEVEL 3" table="es013_n10" column="n3c_nm" uniqueMembers="true">
+                    <Property name="pointgeom" column="the_geom_baryc_l3" type="Geometry" />
                 </Level>
             </Hierarchy>
         </Dimension>
 
-    <!-- CMI: Commented out till we solve a problem with Belgium - BE???? geometry 
-    <Dimension name="NUTS 2003" foreignKey="nuts03_id">
-        <Hierarchy name="NUTS" hasAll="true" allMemberName="All NUTS" primaryKey="n3_id_2003">
-            <Table name="defs_nuts_2003v13"/>
-            <Level name="NUTS 2003 LEVEL 0" table="defs_nuts_2003v13" column="n0_cdnmen" uniqueMembers="false">
-                <Property name="geom" column="the_geom_n0" type="Geometry" />
-            </Level>
-            <Level name="NUTS 2003 LEVEL 1" table="defs_nuts_2003v13" column="n1_cdnm" uniqueMembers="false">
-                <Property name="geom" column="the_geom_n1" type="Geometry" />
-            </Level>
-            <Level name="NUTS 2003 LEVEL 2" table="defs_nuts_2003v13" column="n2_cdnm" uniqueMembers="false">
-                <Property name="geom" column="the_geom_n2" type="Geometry" />
-            </Level>
-            <Level name="NUTS 2003 LEVEL 3" table="defs_nuts_2003v13" column="n3_cdnm" uniqueMembers="true">
-                <Property name="geom" column="the_geom_n3" type="Geometry" />
-            </Level>
-        </Hierarchy>
-    </Dimension>
-    -->
-        <!-- This dimension is redundant with the previous one and its initial definition has been commented -->
-	<!--
-        <Dimension name="NUTS LEVEL3" foreignKey="n3_id">
-            <Hierarchy name="NUTS_L3" hasAll="true" allMemberName="All NUTS" primaryKey="n3_id">
-                <Table name="defs_nuts_2006v13"/>
-                <Level name="NUTS LEVEL 3" table="defs_nuts_2006v13" column="n3_cdnm" uniqueMembers="true"/>
+        <Dimension name="NUTS 2006" foreignKey="prox_nuts06">
+            <Hierarchy name="NUTS 2006" hasAll="true" allMemberName="All NUTS 2006" primaryKey="true">
+                <Table name="es013_n06"/>
+                <Level name="NUTS 2006 LEVEL 0" table="es013_n06" column="n0c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l0" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2006 LEVEL 1" table="es013_n06" column="n1c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l1" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2006 LEVEL 2" table="es013_n06" column="n2c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l2" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2006 LEVEL 3" table="es013_n06" column="n3c_nm" uniqueMembers="true">
+                    <Property name="pointgeom" column="the_geom_baryc_l3" type="Geometry" />
+                </Level>
             </Hierarchy>
         </Dimension>
-	-->
 
-    <Dimension name="ELEVATION BREAKDOWN" foreignKey="ebk_id">
-        <Hierarchy name="EBK" hasAll="true" allMemberName="All Elevation Breakdowns" primaryKey="ebk_id">
-            <Table name="defs_ebkv13"/>
-            <Level name="ELEVATION BREAKDOWN" table="defs_ebkv13" column="ebk_nm" uniqueMembers="true">
-                <Property name="geom" column="the_geom" type="Geometry" />
-            </Level>
-        </Hierarchy>
-    </Dimension>
-    
-    <Dimension name="BIOGEOGRAPHIC REGIONS" foreignKey="rbio_id">
-        <Hierarchy name="RBIO" hasAll="true" allMemberName="All Biogeographic Regions" primaryKey="rbio_id_2008">
-            <Table name="defs_rbio_2008v13"/>
-            <Level name="BIOGEOGRAPHIC REGION" table="defs_rbio_2008v13" column="rbio_nm" uniqueMembers="true">
-                <Property name="geom" column="the_geom" type="Geometry" />
-            </Level>
-        </Hierarchy>
-    </Dimension>
-    
-    <Dimension name="RIVER BASIN DISTRICTS" foreignKey="rbd_id">
-        <Hierarchy name="RBDS" hasAll="true" allMemberName="All Regional Sea Basins" primaryKey="rbd3_id">
-            <Table name="defs_rbdsv13"/>
-            <Level name="RIVER BASINS L1" table="defs_rbdsv13" column="rbd1o_nm" uniqueMembers="false">
-            	<Property name="geom" column="the_geom_l1" type="Geometry" />
-            </Level>
-            <Level name="RIVER BASINS L2" table="defs_rbdsv13" column="rbd2s_nm" uniqueMembers="false">
-            	<Property name="geom" column="the_geom_l2" type="Geometry" />
-            </Level>
-            <Level name="RIVER BASINS L3" table="defs_rbdsv13" column="rbd3_nm" uniqueMembers="true">
-            	<Property name="geom" column="the_geom" type="Geometry" />
-            </Level>
-        </Hierarchy>
-    </Dimension>
+        <Dimension name="NUTS 2003" foreignKey="prox_nuts03">
+            <Hierarchy name="NUTS 2003" hasAll="true" allMemberName="All NUTS 2003" primaryKey="id">
+                <Table name="es013_n03"/>
+                <Level name="NUTS 2003 LEVEL 0" table="es013_n03" column="n0c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l0" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2003 LEVEL 1" table="es013_n03" column="n1c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l1" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2003 LEVEL 2" table="es013_n03" column="n2c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l2" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2003 LEVEL 3" table="es013_n03" column="n3c_nm" uniqueMembers="true">
+                    <Property name="pointgeom" column="the_geom_baryc_l3" type="Geometry" />
+                </Level>
+            </Hierarchy>
+        </Dimension>
         
-    <Dimension name="MASSIFS" foreignKey="massifs_id">
-        <Hierarchy name="MASSIFS" hasAll="true" allMemberName="All Massifs" primaryKey="massifs_id">
-            <Table name="defs_massifsv13"/>
-            <Level name="MASSIFS" table="defs_massifsv13" column="massifs_nm" uniqueMembers="true">
-                <Property name="geom" column="the_geom" type="Geometry" />
-            </Level>
-        </Hierarchy>
-    </Dimension>
-
-    <Dimension name="REGIONAL SEA BASINS" foreignKey="rsea_id">
-        <Hierarchy name="SEA BASINS" hasAll="true" allMemberName="All LUZ" primaryKey="rsea_id">
-            <Table name="defs_rseav13"/>
-            <Level name="SEA BASINS" table="defs_rseav13" column="rsea_nm" uniqueMembers="true">
-                <Property name="geom" column="the_geom" type="Geometry" />
-            </Level>
-        </Hierarchy>
-    </Dimension>
-
-    <Dimension name="CITIES" foreignKey="city_id">
-        <Hierarchy name="CITIES" hasAll="true" allMemberName="All Cities" primaryKey="city_id">
-            <Table name="defs_citiesv13"/>
-            <Level name="CITIES" table="defs_citiesv13" column="city_nm" uniqueMembers="true">
-                <Property name="geom" column="the_geom" type="Geometry" />
-            </Level>
-        </Hierarchy>
-    </Dimension>
-
-    <Dimension name="LARGE URBAN ZONES" foreignKey="luz_id">
-        <Hierarchy name="LUZ" hasAll="true" allMemberName="All LUZ" primaryKey="luz_id">
-            <Table name="defs_luzv13"/>
-            <Level name="LUZ" table="defs_luzv13" column="luz_nm" uniqueMembers="true">
-                <Property name="geom" column="the_geom" type="Geometry" />
-            </Level>
-        </Hierarchy>
-    </Dimension>
-
-    <Dimension name="DOMINANT LAND COVER TYPES 2006" foreignKey="dlt06_id">
-            <Hierarchy name="DLT" hasAll="true" allMemberName="All Cover Types" primaryKey="dlt_id" primaryKeyTable="defs_dlt_06v13">
-                <Table name="defs_dlt_06v13"/>
-                <Level name="DLT2006" table="defs_dlt_06v13" column="dlt_cdnm" uniqueMembers="true"/>
+        <Dimension name="NUTS 1999" foreignKey="prox_nuts99">
+            <Hierarchy name="NUTS 1999" hasAll="true" allMemberName="All NUTS 1999" primaryKey="id">
+                <Table name="es013_n99"/>
+                <Level name="NUTS 1999 LEVEL 0" table="es013_n99" column="n0c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l0" type="Geometry" />
+                </Level>
+                <Level name="NUTS 1999 LEVEL 1" table="es013_n99" column="n1c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l1" type="Geometry" />
+                </Level>
+                <Level name="NUTS 1999 LEVEL 2" table="es013_n99" column="n2c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_l2" type="Geometry" />
+                </Level>
+                <Level name="NUTS 1999 LEVEL 3" table="es013_n99" column="n3c_nm" uniqueMembers="true">
+                    <Property name="pointgeom" column="the_geom_baryc_l3" type="Geometry" />
+                </Level>
             </Hierarchy>
+        </Dimension>
+
+    <Dimension name="LARGE URBAN ZONES 2012" foreignKey="luz12">
+        <Hierarchy name="LUZ 2012" hasAll="true" allMemberName="All LUZ 2012" primaryKey="id">
+            <Table name="es013_luz12"/>
+            <Level name="LUZ 2012" table="es013_luz12" column="luzcnam" uniqueMembers="true">
+                <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="LARGE URBAN ZONES 2004" foreignKey="luz04">
+        <Hierarchy name="LUZ" hasAll="true" allMemberName="All LUZ" primaryKey="id">
+            <Table name="es013_luz04"/>
+            <Level name="LUZ" table="es013_luz04" column="luzc_nm" uniqueMembers="true">
+                <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="URBAN MORPHOLOGICAL ZONES 2000" foreignKey="umz00">
+        <Hierarchy name="UMZ 2000" hasAll="true" allMemberName="All UMZ 2000" primaryKey="id">
+            <Table name="es013_umz00"/>
+            <Level name="UMZ 2000" table="es013_umz00" column="cityname_0" uniqueMembers="true">
+                <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="FUNCTIONAL URBAN AREAS" foreignKey="fua">
+        <Hierarchy name="FUA" hasAll="true" allMemberName="All FUA" primaryKey="id">
+            <Table name="es013_def_fua"/>
+            <Level name="FUA" table="es013_def_fua" column="unitc_name" uniqueMembers="true">
+                <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
+            </Level>
+        </Hierarchy>
     </Dimension>
 
+    <Dimension name="MORPHOLOGICAL URBAN AREAS" foreignKey="mua">
+        <Hierarchy name="MUA" hasAll="true" allMemberName="All MUA" primaryKey="id">
+            <Table name="es013_def_mua"/>
+            <Level name="MUA" table="es013_def_mua" column="code" uniqueMembers="true">
+                <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
+            </Level>
+        </Hierarchy>
+    </Dimension>
 
--->
         <!-- Add the shared dimensions to the cube -->
-    <DimensionUsage name="LAND COVER 90" source="LAND COVER 90" foreignKey="ch9000" />
-	<DimensionUsage name="LAND COVER 00" source="LAND COVER 00" foreignKey="ch9000" />
-	<DimensionUsage name="LAND COVER 06" source="LAND COVER 06" foreignKey="ch0006" />
-	<DimensionUsage name="LAND COVER FLOWS 90-00" source="LAND COVER FLOWS" foreignKey="ch9000" />
-	<DimensionUsage name="LAND COVER FLOWS 00-06" source="LAND COVER FLOWS" foreignKey="ch0006" />
-	<DimensionUsage name="LAND COVER FLOWS 90-06" source="LAND COVER FLOWS" foreignKey="ch9006" />	
-	<DimensionUsage name="CHANGES 90-00" source="CHANGES" foreignKey="ch9000" />
-	<DimensionUsage name="CHANGES 00-06" source="CHANGES" foreignKey="ch0006" />
+    <DimensionUsage name="LAND COVER 90" source="LAND COVER 90" foreignKey="ch90_00" />
+	<DimensionUsage name="LAND COVER 00" source="LAND COVER 00" foreignKey="ch90_00" />
+	<DimensionUsage name="LAND COVER 06" source="LAND COVER 06" foreignKey="ch00_06" />
+	<DimensionUsage name="LAND COVER FLOWS 90-00" source="LAND COVER FLOWS" foreignKey="ch90_00" />
+	<DimensionUsage name="LAND COVER FLOWS 00-06" source="LAND COVER FLOWS" foreignKey="ch00_06" />
+	<DimensionUsage name="LAND COVER FLOWS 90-06" source="LAND COVER FLOWS" foreignKey="ch90_06" />	
+	<DimensionUsage name="CHANGES 90-00" source="CHANGES" foreignKey="ch90_00" />
+	<DimensionUsage name="CHANGES 00-06" source="CHANGES" foreignKey="ch00_06" />
 
-<!-- CMI commented for the moment
-	<DimensionUsage name="LAND COVER 90 LEAC" source="LAND COVER 90 LEAC" foreignKey="change_code" />
-	<DimensionUsage name="LAND COVER 00 LEAC" source="LAND COVER 00 LEAC" foreignKey="change_code" />
-	<DimensionUsage name="DOMINANT LAND COVER" source="DOMINANT LAND COVER" foreignKey="DLT_ID" />
--->
 	<!-- Definition of measures and calculated members -->
-    <Measure name="AREAHA" column="areaha" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-<!-- CMI commented for the moment
-        <Measure name="PERIOD" visible="false" column="PERIOD" aggregator="sum" datatype="Numeric" formatString="#,##0.###"/>
-        <CalculatedMember name="AREA_PER_YEAR" dimension="Measures" formula="[Measures].[AREAHA]/[Measures].[PERIOD]">
-            <CalculatedMemberProperty name="FORMAT_STRING" value="#.##0,###"/>
-        </CalculatedMember>
--->
+
+    <Measure name="Population 2009 (1000 inh.)" column="pop09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Population 2006 (1000 inh.)" column="pop06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Population 2003 (1000 inh.)" column="pop03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Population 2000 (1000 inh.)" column="pop00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2009 (in PPS)" column="pps09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2006 (in PPS)" column="pps06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2003 (in PPS)" column="pps03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2000 (in PPS)" column="pps00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2009 (million euro)" column="gdp09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2006 (million euro)" column="gdp06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2003 (million euro)" column="gdp03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2000 (million euro)" column="gdp00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Births 2009 (thousand)" column="birth09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Births 2006 (thousand)" column="birth06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Births 2003 (thousand)" column="birth03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Births 2000 (thousand)" column="birth00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Deaths 2009 (thousand)" column="death09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Deaths 2006 (thousand)" column="death06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Deaths 2003 (thousand)" column="death03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Deaths 2000 (thousand)" column="death00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    
+    <Measure name="Area (ha)" column="area" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     </Cube>
 
     <!-- Add support for geo-analytical operators brought by GeoMondrian -->

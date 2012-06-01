@@ -1,11 +1,9 @@
 # This file contains key-value pairs that will be used to resolve @key@ strings in the filtered resources
-
-servername=pegasosdi.uab.es
 db-server=localhost
-
-db-name=c2c
+servername=pegasosdi.uab.es
+db-name=espondb2_cubes
 cube-definition=cube-definition.xml
 simple-cube-definition=simple-cube-definition.xml
 cube-name=pg_CLC_90_00
-cube-title=Espon1
-cube-desc=Espon cube
+cube-title=Espon Socioeconomic data
+cube-desc=Espon socioeconomic cube

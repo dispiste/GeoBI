@@ -527,7 +527,19 @@ App.queryMgr = function(options) {
         });
         executeQuery();
     };
-
+    
+    var getHumanReadableMeasures = function(){
+        var measures = App.queryMgr.getMeasures();
+        var mList = [];
+        for (var index=0; index<measures.length; index++) {
+            console.log( App.cubeProperties.findMeasureByUniqueName(measures[index]).get('MEASURE_NAME'));
+            var mtxt =   App.cubeProperties.findMeasureByUniqueName(measures[index]).get('MEASURE_NAME');
+            mList.push(mtxt);
+        } 
+            
+        return mList.join(", ");
+    }
+    
     var getNumCols = function(query) {
         if (query.cols){
             var columns = 1;
@@ -563,6 +575,8 @@ App.queryMgr = function(options) {
     return {
         init: function() {
         	addExecutionRule(new App.LimitQuerySizeRule());
+        	//addExecutionRule(new App.BlackListQueries());
+        	addExecutionRule(new App.RemoveNoData());
             createNewQuery();
         },
         events: _events,
@@ -583,6 +597,7 @@ App.queryMgr = function(options) {
         drillDown: drillDown,
         rollUp: rollUp,
         addExecutionRule: addExecutionRule,
+        getHumanReadableMeasures: getHumanReadableMeasures,
         getNumCols: getNumCols,
         getNumRows: getNumRows
     };

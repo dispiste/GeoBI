@@ -55,13 +55,13 @@ layouts:
         items:
           - !text
             font: Helvetica
-            fontSize: 30
+            fontSize: 16
             align: center
             text: '${mapTitle}'
       items:
         - !table
           absoluteX: 580
-          absoluteY: 525
+          absoluteY: 540
           width: 250
           backgroundColor: #FFFFFF
           condition: includeMap
@@ -75,12 +75,12 @@ layouts:
           width: 500
           height: 400
           align: left
-          absoluteX: 30
-          absoluteY: 500
+          absoluteX: 50
+          absoluteY: 540
           condition: includeMap
         - !columns
           absoluteX: 400
-          absoluteY: 120
+          absoluteY: 170
           width: 200
           condition: includeMap
           items:
@@ -104,16 +104,74 @@ layouts:
               vertAlign: middle
               backgroundColor: #FFFFFF
               lockUnits: false
-        - !text
-          text: '${comment}'
-          spacingAfter: 300
+        - !columns
+          config:
+            borderWidth: 0
+            cells:
+              - borderWidth: 0
+                paddingBottom: 400
+                backgroundColor: #000099
+          absoluteX: 30
+          absoluteY: 540
+          backgroundColor: #000099
+          width: 20
           condition: includeMap
+          items:
+            - !text
+              text: ''
+        - !columns
+          config:
+            borderWidth: 0
+            cells:
+              - borderWidth: 0
+                paddingBottom: 400
+                backgroundColor: #000099
+          absoluteX: 550
+          absoluteY: 540
+          backgroundColor: #000099
+          width: 20
+          condition: includeMap
+          items:
+            - !text
+              text: ''
+        - !columns
+          absoluteX: 40
+          absoluteY: 170
+          width: 130
+          condition: includeMap
+          items:
+            - !image
+              align: center
+              url: 'http://localhost:8080/webbi/app/images/ESPON-logo-big.png'
+              condition: includeChart
+              maxWidth: 65
+        - !columns
+          absoluteX: 42
+          absoluteY: 120
+          width: 500
+          condition: includeMap
+          items:
+            - !image
+              align: center
+              url: 'http://localhost:8080/webbi/app/images/eu_flag_partfinanced.png'
+              condition: includeChart
+              maxWidth: 200
+            - !text
+              fontSize: 10
+              vertAlign: middle
+              text: '${comment}'
+        - !text
+           text: ' '
+           spacingAfter: 300
         - !image
           align: center
           url: '${urlChart}'
           condition: includeChart
           maxWidth: 700
           spacingAfter: 10
+        - !text
+           text: ' '
+           spacingAfter: 10
         - !pivottable
           borderWidth: 1
           condition: includeTable
@@ -135,104 +193,9 @@ layouts:
             items:
               - !text
                 align: left
-                text: © GeoBI OLAP Cube Viewer
+                fontSize: 9
+                text: (C) TEAM ESPON M4D - UAB. This map does not necessarily reflect the opinion of the ESPON Monitoring Committee.
               - !text
                 align: right
-                text: '${pageNum} / ${pageTot}'
-
-
-  #===========================================================================
-  A3:
-  #===========================================================================
-    mainPage:
-      pageSize: A3
-      landscape: true
-      header:
-        height: 50
-        items:
-          - !text
-            font: Helvetica
-            fontSize: 30
-            align: center
-            text: '${mapTitle}'
-      items:
-        - !table
-          absoluteX: 850
-          absoluteY: 760
-          width: 250
-          backgroundColor: #FFFFFF
-          condition: includeMap
-          items:
-            - !image
-              align: center
-              url: '${urlLegend}'
-              maxWidth: 250
-              maxHeight: 800
-        - !map
-          width: 800
-          height: 500
-          align: left
-          absoluteX: 30
-          absoluteY: 750
-          condition: includeMap
-        - !columns
-          absoluteX: 680
-          absoluteY: 270
-          width: 200
-          condition: includeMap
-          items:
-            - !scalebar
-              maxSize: 150
-              type: bar
-              intervals: 4
-              subIntervals: false
-              units: m
-              barSize: 4
-              lineWidth: 1
-              barDirection: up
-              textDirection: up
-              labelDistance: 3
-              font: Helvetica
-              fontSize: 12
-              fontColor: black
-              color: #000000
-              spacingAfter: 0
-              align: left
-              vertAlign: middle
-              backgroundColor: #FFFFFF
-              lockUnits: false
-        - !text
-          text: '${comment}'
-          spacingAfter: 600
-          condition: includeMap
-        - !image
-          align: center
-          condition: includeChart
-          url: '${urlChart}'
-          maxWidth: 700
-          spacingAfter: 10
-        - !pivottable
-          borderWidth: 1
-          condition: includeTable
-          tableConfig: &config
-            borderWidth: 1
-            cells:
-              - borderWidthBottom: 0.5
-                borderWidthLeft: 0.5
-                padding: 2
-              - row: 0
-                borderWidthBottom: 1
-                backgroundColor: #EEEEEE
-                align: center          
-      footer:
-        height: 30
-        items:
-          - !columns
-            widths: [90, 10] 
-            items:
-              - !text
-                align: left
-                text:  © GeoBI OLAP Cube Viewer
-              - !text
-                align: right
+                fontSize: 9
                 text: '${pageNum} / ${pageTot}'

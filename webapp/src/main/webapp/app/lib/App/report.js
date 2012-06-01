@@ -111,7 +111,7 @@ App.report = function() {
                     xtype: "textfield",
                     name: "mapTitle",
                     fieldLabel: "Title",
-                    value: "A custom title",
+                    value: App.queryMgr.getHumanReadableMeasures(),
                     plugins: new GeoExt.plugins.PrintPageField({
                         printPage: printPage
                     })
@@ -119,7 +119,7 @@ App.report = function() {
                     xtype: "textarea",
                     fieldLabel: "Comment",
                     name: "comment",
-                    value: "A custom comment",
+                    value: "(C) EuroGeographics for the administrative boundaries",
                     plugins: new GeoExt.plugins.PrintPageField({
                         printPage: printPage
                     })
