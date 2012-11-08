@@ -63,7 +63,6 @@ App.ExecutionRuleProcessor = Ext.extend(Ext.util.Observable, {
             var result = rule.check();
             if (result==rule.CANCEL) {
                 this.fireEvent("rulesrejected", this);
-                Ext.MessageBox.alert('Error', rule.getConfirmText());
                 return;
             }
             else if (result==rule.ASKUSER) {
