@@ -497,6 +497,7 @@ App.queryMgr = function(options) {
     return {
         init: function() {
         	addExecutionRule(new App.LimitQuerySizeRule());
+        	addExecutionRule(new App.BlackListQueries());
             createNewQuery();
         },
         events: _events,
