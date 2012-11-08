@@ -148,3 +148,37 @@ App.LimitQuerySizeRule = Ext.extend(App.ExecutionRule, {
         return 'This query may include many members and it may take long to execute. Big queries are usually meaningless. Do you really want to execute this query?'; 
     }
 });
+
+/**
+ * BlackListQueries: we don't allow certain queries (for instance unemployment
+ * by NUTS), as there is better ways to get these stats (e.g. Eurostat). Cube
+ * results have been aggregated to 1km and can introduce errors compared with
+ * official Eurostat results. 
+ */
+App.BlackListQueries = Ext.extend(App.ExecutionRule, {
+    /**
+     * Checks this rule.
+     * 
+     * @return {integer} checkResult Returns App.ExecutionRule.EXECUTE, 
+     * App.ExecutionRule.CANCEL or App.ExecutionRule.ASKUSER
+     */
+    check: function(){
+        query = App.queryMgr.getQuery();
+        if (query) {
+            if (query.cols.length==0 &&
+                    query.rows.length==1 &&
+                    (query.rows[0].dimension=='[NUTS 2006]' ||
+                        query.rows[0].dimension=='[NUTS 2003]' ||
+                        query.rows[0].dimension=='[NUTS 2010]')
+                    // && (query.measure.members=='[Measures].[AREAHA]' || 
+                    //        query.measure.members=='[Measures].[AREAHA]')
+                ) {
+                return this.CANCEL;
+            }
+        }
+        return this.EXECUTE;
+    },
+    getConfirmText: function() {
+        return 'Pick a thematic dimension for your query! If you want to get direct NUTS statistics, official data is available from Eurostats.'; 
+    }
+});
