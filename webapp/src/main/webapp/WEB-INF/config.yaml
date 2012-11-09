@@ -102,7 +102,7 @@ layouts:
             items:
               - !text
                 align: left
-                text: © GeoBI OLAP Cube Viewer
+                text: © ESPON OLAP Cube Viewer
               - !text
                 align: right
                 text: '${pageNum} / ${pageTot}'
@@ -166,7 +166,7 @@ layouts:
             items:
               - !text
                 align: left
-                text:  © GeoBI OLAP Cube Viewer
+                text:  © ESPON OLAP Cube Viewer
               - !text
                 align: right
                 text: '${pageNum} / ${pageTot}'
