@@ -559,8 +559,8 @@ public class StyleGenerationParams {
 			maxPxSize = tmp;
 		}
 
-		Double maxDblVal = 20.0; 
-		Double minDblVal = 5.0;
+		double maxDblVal = 20.0; 
+		double minDblVal = 5.0;
 
 		if (maxValue instanceof Number) {
 			maxDblVal = ((Number) maxValue).doubleValue();
@@ -570,20 +570,17 @@ public class StyleGenerationParams {
 			minDblVal = ((Number) minValue).doubleValue();
 		}
 		
-		Double a,b;
-		
-		if(minDblVal == maxDblVal) {
-			throw new Exception("Division by zero");
-		}
-		
-		a = (minPxSize - maxPxSize) / (minDblVal - maxDblVal);
-		b = maxPxSize - maxDblVal * a ;
-	
-		// y = a * x + b	(y = size in px, x size in the GT store)
-				
+		double a,b;
 		org.opengis.filter.expression.Expression sizeExpression;
-
-		sizeExpression = ff.add(ff.multiply(ff.literal(a), ff.property(overlayIndicator)), ff.literal(b));
+		if ((maxDblVal-minDblVal)<0.0001) { // consider them as equal, there is a single value in the dataset
+			sizeExpression = ff.literal(maxPxSize);
+		}
+		else {
+			a = (minPxSize - maxPxSize) / (minDblVal - maxDblVal);
+			b = maxPxSize - maxDblVal * a ;
+			// y = a * x + b	(y = size in px, x size in the GT store)
+			sizeExpression = ff.add(ff.multiply(ff.literal(a), ff.property(overlayIndicator)), ff.literal(b));
+		}
 		
 		Graphic graphic = builder.createGraphic(null, mark, null);
 		graphic.setSize(sizeExpression);
