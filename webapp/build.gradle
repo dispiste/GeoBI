@@ -6,7 +6,6 @@ apply plugin: 'java'
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'eclipse'
-apply plugin: 'eclipse'
 apply plugin: Geotools
 apply plugin: Camptocamp
 apply plugin: Spring
@@ -27,7 +26,7 @@ def downloadDeps() {
     def baseURL = 'http://pegasosdi.uab.es/geobi-repo/'
 
     def dependencies = ['commons-beanutils.jar', 'commons-math.jar',
-    'eigenbase-xom.jar',  'jts-1.10.jar', 'postgresql-8.4-701.jdbc3.jar',
+    'eigenbase-xom.jar',  'jts-1.11.jar', 'postgresql-8.4-701.jdbc3.jar',
     'commons-collections-3.2.1.jar', 'commons-pool.jar', 'ezmorph-1.0.4.jar',
     'log4j-1.2.16.jar', 'servlet-api.jar', 'commons-dbcp.jar', 'commons-vfs.jar',
     'geomondrian.jar', 'mapfish-geo-lib-1.2-SNAPSHOT.jar', 'spatialytics.jar',
