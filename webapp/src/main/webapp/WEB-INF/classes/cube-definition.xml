@@ -219,11 +219,11 @@
     <Dimension name="RIVER BASIN DISTRICTS" foreignKey="rbd_id">
         <Hierarchy name="RBDS" hasAll="true" allMemberName="All Regional Sea Basins" primaryKey="rbd3_id">
             <Table name="defs_rbdsv13"/>
-            <Level name="RIVER BASINS L1" table="defs_rbdsv13" column="rbd1o_nm" uniqueMembers="true">
+            <Level name="RIVER BASINS L1" table="defs_rbdsv13" column="rbd1o_nm" uniqueMembers="false">
             	<Property name="geom" column="the_geom_l1" type="Geometry" />
             	<Property name="pointgeom" column="the_geom_baryc_l1" type="Geometry" />
             </Level>
-            <Level name="RIVER BASINS L2" table="defs_rbdsv13" column="rbd2s_nm" uniqueMembers="true">
+            <Level name="RIVER BASINS L2" table="defs_rbdsv13" column="rbd2s_nm" uniqueMembers="false">
             	<Property name="geom" column="the_geom_l2" type="Geometry" />
             	<Property name="pointgeom" column="the_geom_baryc_l2" type="Geometry" />
             </Level>
