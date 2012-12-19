@@ -286,14 +286,32 @@ App.cubeProperties = function() {
      * level {String} the level unique_name
      */
     var getMembersCountByLevel = function(level) {
-    	var level = App.cubeProperties.findLevelByUniqueName(level);
+    	var level = findLevelByUniqueName(level);
     	var number = level.get('LEVEL_NUMBER');
     	var dimension = level.get('DIMENSION_UNIQUE_NAME');
-    	var members = App.cubeProperties.findDimensionByUniqueName(dimension).members;
+    	var members = findDimensionByUniqueName(dimension).members;
     	members.filter("LEVEL_NUMBER", number);
     	var count = members.getCount();
     	members.clearFilter();
     	return count;
+    }
+    
+    /**
+     * Method: getMembersByLevel
+     * Get the members of a given level
+     *
+     * Parameters:
+     * level {String} the level unique_name
+     */
+    var getMembersByLevel = function(level) {
+        var level = findLevelByUniqueName(level);
+        var number = level.get('LEVEL_NUMBER');
+        var dimension = level.get('DIMENSION_UNIQUE_NAME');
+        var members = findDimensionByUniqueName(dimension).members;
+        members.filter("LEVEL_NUMBER", number);
+        var mbylevel = members.collect('MEMBER_UNIQUE_NAME');
+        members.clearFilter();
+        return mbylevel;
     }
 
     /**
@@ -485,6 +503,7 @@ App.cubeProperties = function() {
         getColumns: getColumns,
         getHeaderGroupRows: getHeaderGroupRows,
         findLevelByNumber: findLevelByNumber,
-        getMembersCountByLevel: getMembersCountByLevel
+        getMembersCountByLevel: getMembersCountByLevel,
+        getMembersByLevel: getMembersByLevel
     };
 }();
