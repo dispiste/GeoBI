@@ -182,3 +182,38 @@ App.BlackListQueries = Ext.extend(App.ExecutionRule, {
         return 'Pick a thematic dimension for your query! If you want to get direct NUTS statistics, official data is available from Eurostats.'; 
     }
 });
+
+/**
+ * RemoveNoData: This execution rule may be used to remove any no-data member
+ * from the query. 
+ */
+App.RemoveNoData = Ext.extend(App.ExecutionRule, {
+    /**
+     * Checks this rule.
+     * 
+     * @return {integer} checkResult Returns App.ExecutionRule.EXECUTE, 
+     * App.ExecutionRule.CANCEL or App.ExecutionRule.ASKUSER
+     */
+    check: function(){
+        query = App.queryMgr.getQuery();
+        if (query) {
+            var rows = query.rows;
+            for (var nrow=0; nrow<rows.length; nrow++) {
+                var members = [];
+                if (rows[0].members) {
+                    var allMembers = rows[0].members;
+                }
+                else {
+                    var allMembers = getMembersByLevel(rows[nrow].level);
+                }
+                for (var i=0; i<allMembers.length; i++) {
+                    if (!allMembers[i].contains("99 NO NUTS 2006]")) { // other no-data members should be added here
+                        members.push(allMembers[i]);
+                    }
+                }
+                rows[nrow].members = members;
+            }
+        }
+        return this.EXECUTE;
+    }
+});
