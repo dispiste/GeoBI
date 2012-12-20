@@ -150,8 +150,19 @@
     <Measure name="POPULATION 2003 (1000 inh.)" column="pop03p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     <Measure name="POPULATION 2002 (1000 inh.)" column="pop02p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     <Measure name="POPULATION 2001 (1000 inh.)" column="pop01p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2000 (1000 inh.)" column="pop00p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>    </Cube>
+    <Measure name="POPULATION 2000 (1000 inh.)" column="pop00p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1999 (1000 inh.)" column="pop99p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1998 (1000 inh.)" column="pop98p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1997 (1000 inh.)" column="pop97p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1996 (1000 inh.)" column="pop96p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1995 (1000 inh.)" column="pop95p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1994 (1000 inh.)" column="pop94p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1993 (1000 inh.)" column="pop93p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1992 (1000 inh.)" column="pop92p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1991 (1000 inh.)" column="pop91p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="POPULATION 1990 (1000 inh.)" column="pop90p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     <Measure name="AREA (Ha)" column="area" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    </Cube>
 
     <!-- Add support for geo-analytical operators brought by GeoMondrian -->
     <UserDefinedFunction name="ST_Contains" className="mondrian.udf.geo.STContainsUdf" />
