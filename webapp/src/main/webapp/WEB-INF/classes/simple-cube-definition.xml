@@ -72,13 +72,13 @@
                 <Level name="NUTS 2006 LEVEL 0" table="e012_n06" column="n0c_nm" uniqueMembers="false">
                     <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2006 LEVEL 1" table="e012_n06" column="n0c_nm" uniqueMembers="false">
+                <Level name="NUTS 2006 LEVEL 1" table="e012_n06" column="n1c_nm" uniqueMembers="false">
                     <Property name="pointgeom" column="the_geom_baryc_n1" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2006 LEVEL 2" table="e012_n06" column="n0c_nm" uniqueMembers="false">
+                <Level name="NUTS 2006 LEVEL 2" table="e012_n06" column="n2c_nm" uniqueMembers="false">
                     <Property name="pointgeom" column="the_geom_baryc_n2" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2006 LEVEL 3" table="e012_n06" column="n0c_nm" uniqueMembers="true">
+                <Level name="NUTS 2006 LEVEL 3" table="e012_n06" column="n3c_nm" uniqueMembers="true">
                     <Property name="pointgeom" column="the_geom_baryc_n3" type="Geometry" />
                 </Level>
             </Hierarchy>
@@ -139,7 +139,6 @@
 	<DimensionUsage name="CHANGES 00-06" source="CHANGES" foreignKey="ch00_06" />
 
 	<!-- Definition of measures and calculated members -->
-    <Measure name="AREA (Ha)" column="area" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     <Measure name="POPULATION 2011 (1000 inh.)" column="pop11p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     <Measure name="POPULATION 2010 (1000 inh.)" column="pop10p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     <Measure name="POPULATION 2009 (1000 inh.)" column="pop09p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
@@ -152,6 +151,7 @@
     <Measure name="POPULATION 2002 (1000 inh.)" column="pop02p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     <Measure name="POPULATION 2001 (1000 inh.)" column="pop01p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     <Measure name="POPULATION 2000 (1000 inh.)" column="pop00p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>    </Cube>
+    <Measure name="AREA (Ha)" column="area" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
 
     <!-- Add support for geo-analytical operators brought by GeoMondrian -->
     <UserDefinedFunction name="ST_Contains" className="mondrian.udf.geo.STContainsUdf" />
