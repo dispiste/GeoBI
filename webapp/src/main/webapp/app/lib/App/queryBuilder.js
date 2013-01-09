@@ -107,6 +107,7 @@ App.queryBuilder = function(options) {
     });
 
     var measureCombo = new Ext.form.ComboBox({
+        width: 250,
         store: App.cubeProperties.measures,
         mode: 'local',
         triggerAction: 'all',
