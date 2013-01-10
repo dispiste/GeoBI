@@ -67,7 +67,7 @@
         <Table name="e012_nov2012_2" />
 
         <Dimension name="NUTS 2006" foreignKey="prox_n06">
-            <Hierarchy name="NUTS" hasAll="true" allMemberName="All NUTS" primaryKey="fid_">
+            <Hierarchy name="NUTS 2006" hasAll="true" allMemberName="All NUTS 2006" primaryKey="fid_">
                 <Table name="e012_n06"/>
                 <Level name="NUTS 2006 LEVEL 0" table="e012_n06" column="n0c_nm" uniqueMembers="false">
                     <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
@@ -107,6 +107,24 @@
         </Hierarchy>
     </Dimension>
     -->
+
+        <Dimension name="NUTS 1999" foreignKey="prox_n99">
+            <Hierarchy name="NUTS 1999" hasAll="true" allMemberName="All NUTS 1999" primaryKey="value_">
+                <Table name="e012_n99"/>
+                <Level name="NUTS 1999 LEVEL 0" table="e012_n99" column="n0c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
+                </Level>
+                <Level name="NUTS 1999 LEVEL 1" table="e012_n99" column="n1c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_n1" type="Geometry" />
+                </Level>
+                <Level name="NUTS 1999 LEVEL 2" table="e012_n99" column="n2c_nm" uniqueMembers="false">
+                    <Property name="pointgeom" column="the_geom_baryc_n2" type="Geometry" />
+                </Level>
+                <Level name="NUTS 1999 LEVEL 3" table="e012_n99" column="n3c_nm" uniqueMembers="true">
+                    <Property name="pointgeom" column="the_geom_baryc_n3" type="Geometry" />
+                </Level>
+            </Hierarchy>
+        </Dimension>
 
     <Dimension name="ELEVATION BREAKDOWN" foreignKey="ebk0">
         <Hierarchy name="EBK" hasAll="true" allMemberName="All Elevation Breakdowns" primaryKey="ebk_id">
