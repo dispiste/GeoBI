@@ -160,26 +160,6 @@ App.map = function() {
                 currentNavigable = i;
             }
         }
-
-        var menu = navigableChooser.menu;
-        menu.removeAll();
-        for (var i in navigables) {
-            var checkItem = new Ext.menu.CheckItem({
-                text: navigables[i][2],
-                group: 'navigable',
-                checked: currentNavigable == i,
-                listeners: {
-                    checkchange: (function(item, checked, i) {
-                        if (checked) {
-                            currentNavigable = i;
-                            addDrillDownControl();
-                            addRollupControl();
-                        }
-                    }).createDelegate(null, i, true)
-                }
-            });
-            menu.add(checkItem);
-        }
     };
 
     /**
@@ -321,11 +301,6 @@ App.map = function() {
         border: false
     });
 
-    var navigableChooser = new Ext.menu.Item({
-        text: 'Dimension to drill down / roll up',
-        menu: new Ext.menu.Menu({}) 
-    });
-
     var container = new Ext.Container({
         items: [
             {
@@ -375,10 +350,6 @@ App.map = function() {
                             tooltip: "Click to roll up",
                             iconCls: 'roll-up',
                             disabled: true
-                        }),
-                        new Ext.Button({
-                            text: 'Options',
-                            menu: [navigableChooser]
                         })
                     ]
                 }, {
