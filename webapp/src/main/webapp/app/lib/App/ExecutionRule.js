@@ -204,10 +204,11 @@ App.RemoveNoData = Ext.extend(App.ExecutionRule, {
                     var allMembers = rows[0].members;
                 }
                 else {
-                    var allMembers = getMembersByLevel(rows[nrow].level);
+                    var allMembers = App.cubeProperties.getMembersByLevel(rows[nrow].level);
                 }
                 for (var i=0; i<allMembers.length; i++) {
-                    if (!allMembers[i].contains("99 NO NUTS 2006]")) { // other no-data members should be added here
+                    if (!allMembers[i].contains("99 NO NUTS")
+                            && !allMembers[i].contains("No Data")) { // other no-data members should be added here
                         members.push(allMembers[i]);
                     }
                 }

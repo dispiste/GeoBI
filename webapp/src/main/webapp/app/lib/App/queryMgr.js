@@ -532,6 +532,7 @@ App.queryMgr = function(options) {
         init: function() {
         	addExecutionRule(new App.LimitQuerySizeRule());
         	//addExecutionRule(new App.BlackListQueries());
+        	addExecutionRule(new App.RemoveNoData());
             createNewQuery();
         },
         events: _events,
