@@ -66,6 +66,28 @@
     <Cube name="pg_CLC_90_00" enabled="true">
         <Table name="e012_nov2012_2" />
 
+        <Dimension name="NUTS 2010" foreignKey="prox_nuts10">
+            <Hierarchy name="NUTS 2010" hasAll="true" allMemberName="All NUTS 2010" primaryKey="value_">
+                <Table name="e012_n10"/>
+                <Level name="NUTS 2010 LEVEL 0" table="e012_n10" column="n0c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_n0" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2010 LEVEL 1" table="e012_n10" column="n1c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_n1" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_n1" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2010 LEVEL 2" table="e012_n10" column="n2c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_n2" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_n2" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2010 LEVEL 3" table="e012_n10" column="n3c_nm" uniqueMembers="true">
+                    <Property name="geom" column="the_geom_n3" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_n3" type="Geometry" />
+                </Level>
+            </Hierarchy>
+        </Dimension>
+
         <Dimension name="NUTS 2006" foreignKey="prox_n06">
             <Hierarchy name="NUTS 2006" hasAll="true" allMemberName="All NUTS 2006" primaryKey="fid_">
                 <Table name="e012_n06"/>
@@ -88,30 +110,28 @@
             </Hierarchy>
         </Dimension>
 
-    <!-- CMI: Commented out till we solve a problem with Belgium - BE???? geometry 
-    <Dimension name="NUTS 2003" foreignKey="nuts03_id">
-        <Hierarchy name="NUTS" hasAll="true" allMemberName="All NUTS" primaryKey="n3_id_2003">
-            <Table name="defs_nuts_2003v13"/>
-            <Level name="NUTS 2003 LEVEL 0" table="defs_nuts_2003v13" column="n0_cdnmen" uniqueMembers="false">
-                <Property name="geom" column="the_geom_n0" type="Geometry" />
-                <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
-            </Level>
-            <Level name="NUTS 2003 LEVEL 1" table="defs_nuts_2003v13" column="n1_cdnm" uniqueMembers="false">
-                <Property name="geom" column="the_geom_n1" type="Geometry" />
-                <Property name="pointgeom" column="the_geom_baryc_n1" type="Geometry" />
-            </Level>
-            <Level name="NUTS 2003 LEVEL 2" table="defs_nuts_2003v13" column="n2_cdnm" uniqueMembers="false">
-                <Property name="geom" column="the_geom_n2" type="Geometry" />
-                <Property name="pointgeom" column="the_geom_baryc_n2" type="Geometry" />
-            </Level>
-            <Level name="NUTS 2003 LEVEL 3" table="defs_nuts_2003v13" column="n3_cdnm" uniqueMembers="true">
-                <Property name="geom" column="the_geom_n3" type="Geometry" />
-                <Property name="pointgeom" column="the_geom_baryc_n3" type="Geometry" />
-            </Level>
-        </Hierarchy>
-    </Dimension>
-    -->
-
+        <Dimension name="NUTS 2003" foreignKey="prox_nuts03">
+            <Hierarchy name="NUTS 2003" hasAll="true" allMemberName="All NUTS 2003" primaryKey="value_">
+                <Table name="e012_n03"/>
+                <Level name="NUTS 2003 LEVEL 0" table="e012_n03" column="n0c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_n0" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2003 LEVEL 1" table="e012_n03" column="n1c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_n1" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_n1" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2003 LEVEL 2" table="e012_n03" column="n2c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_n2" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_n2" type="Geometry" />
+                </Level>
+                <Level name="NUTS 2003 LEVEL 3" table="e012_n03" column="n3c_nm" uniqueMembers="true">
+                    <Property name="geom" column="the_geom_n3" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_n3" type="Geometry" />
+                </Level>
+            </Hierarchy>
+        </Dimension>
+        
         <Dimension name="NUTS 1999" foreignKey="prox_n99">
             <Hierarchy name="NUTS 1999" hasAll="true" allMemberName="All NUTS 1999" primaryKey="value_">
                 <Table name="e012_n99"/>
@@ -145,7 +165,7 @@
             </Level>
         </Hierarchy>
     </Dimension>
-<!--
+
     <Dimension name="LARGE URBAN ZONES" foreignKey="luz_ndt">
         <Hierarchy name="LUZ" hasAll="true" allMemberName="All LUZ" primaryKey="grid_id">
             <Table name="es012_luz"/>
@@ -154,7 +174,7 @@
                 <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
             </Level>
         </Hierarchy>
-    </Dimension> -->
+    </Dimension>
 
         <!-- Add the shared dimensions to the cube -->
     <DimensionUsage name="LAND COVER 90" source="LAND COVER 90" foreignKey="ch90_00" />
