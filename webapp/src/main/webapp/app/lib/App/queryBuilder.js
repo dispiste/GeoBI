@@ -30,6 +30,9 @@ App.queryBuilder = function(options) {
             // there is no spatial dimension, show the chooser
             spatialChooser.show();
         }
+        else {
+            spatialChooser.hide();
+        }
         for (i = 0; i < cols.length; i++) {
             addDimension(thematicBlock, cols[i]);
         }
