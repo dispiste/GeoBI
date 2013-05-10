@@ -142,6 +142,20 @@ App.cubeProperties = function() {
     };
 
     /**
+     * Method: findLevelByUniqueName
+     *
+     * Parameters:
+     * unique_name {String} - The level unique_name
+     *
+     * Returns
+     * {Ext.data.Record} - The found level
+     */
+    var findMeasureByUniqueName = function(unique_name) {
+        var index = measures.find("MEASURE_UNIQUE_NAME", unique_name);
+        return measures.getAt(index);
+    };
+    
+    /**
      * Method: isDrillable 
      * Determines if a level is drillable
      *
@@ -496,6 +510,7 @@ App.cubeProperties = function() {
         findLevelByUniqueName: findLevelByUniqueName,
         findDimensionByName: findDimensionByName,
         findDimensionByUniqueName: findDimensionByUniqueName,
+        findMeasureByUniqueName: findMeasureByUniqueName,
         findMemberByName: findMemberByName,
         findMemberByUniqueName: findMemberByUniqueName,
         findMemberParent: findMemberParent,

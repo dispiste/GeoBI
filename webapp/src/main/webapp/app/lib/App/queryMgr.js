@@ -90,7 +90,8 @@ App.queryMgr = function(options) {
         queries.push({
             cube: App.cube,
             cols: [],
-            rows: []
+            rows: [],
+            measure: {dimension: "", members:[]}
         });
         query = queries[queries.length - 1];
     };
@@ -102,12 +103,34 @@ App.queryMgr = function(options) {
      * Parameters:
      * dimension {String} The dimension unique_name
      * measure {String} The measure unique_name
+     * position {Integer} The index where to add the new measure, the
+     *     measure will be put at the last position if not given (optional)
      */
-    var addMeasure = function(dimension, measure) {
-        query['measure'] = {
-            dimension: dimension,
-            members: [measure]
-        };
+    var addMeasure = function(measure, position) {
+        if (position==null){
+            position = query['measure']['members'].length;
+        }
+        query['measure']['members'].splice(position, 0, measure);
+        _events.triggerEvent('update');
+    };
+    /**
+     * Method: addMeasure 
+     * Adds a new measure to the current query, only one measure can be added.
+     *
+     * Parameters:
+     * dimension {String} The dimension unique_name
+     * measure {String} The measure unique_name
+     * position {Integer} The index where to add the new measure, the
+     *     measure will be put at the last position if not given (optional)
+     */
+    var removeMeasure = function(measure) {
+        var members = query['measure']['members'];
+        for (i = 0; i < members.length; i++) {
+            if (members[i] == measure) {
+                members.splice(i, 1);
+            }
+        }
+        _events.triggerEvent('update');
     };
 
     /**
@@ -276,6 +299,17 @@ App.queryMgr = function(options) {
             dimensions.push(query.rows[i].dimension);
         }
         return dimensions;
+    };
+ 
+    /**
+     * Method: getMeasures
+     * Returns the list of currently selected measures
+     *
+     * Returns:
+     * {Array(String)} Array of the measures unique_name
+     */
+    var getMeasures = function() {
+        return query.measure.members;
     };
 
     /**
@@ -506,12 +540,14 @@ App.queryMgr = function(options) {
         createNewQuery: createNewQuery,
         useRelativeValues: useRelativeValues,
         addMeasure: addMeasure,
+        removeMeasure: removeMeasure,
         addColDimension: addColDimension,
         addRowDimension: addRowDimension,
         removeDimension: removeDimension,
         setMembers: setMembers,
         executeQuery: executeQuery,
         getDimensions: getDimensions,
+        getMeasures: getMeasures,
         drillDown: drillDown,
         rollUp: rollUp,
         addExecutionRule: addExecutionRule

@@ -12,7 +12,7 @@ apply plugin: Spring
 apply plugin: 'project-report'
 
 extraLibs = "$projectDir/libs"
-//System.properties['jsdebug'] = "true"
+System.properties['jsdebug'] = "true"
 
 
 def downloadDeps() {
@@ -259,8 +259,10 @@ task(combineAppJs, dependsOn:copyJsResources) << {
       'app/lib/App/errorMgr.js',
       'app/lib/App/DimensionChooser.js',
       'app/lib/App/DimensionSelector.js',
+      'app/lib/App/MeasureQueryUI.js',
       'app/lib/App/MemberSelector.js',
       'app/lib/App/MDX.js',
+      'app/lib/App/MeasureChooser.js',
       'app/lib/App/ExecutionRule.js',
       'app/lib/App/queryMgr.js',
       'app/lib/App/main.js',
@@ -340,3 +342,12 @@ task(jsMinify) {
   
 }
 
+// quickly deploy client-only (javascript) changes
+task(jsdeploy, dependsOn: jsMinify) << {
+  jsdeploydir = deploydir + "/" + contextName + "/lib/minified"
+  ant.copy(file: minifiedApp, todir: jsdeploydir)
+  ant.copy(file: minifiedGeoExt, todir: jsdeploydir)
+  ant.copy(file: minifiedOL, todir: jsdeploydir)
+  ant.copy(file: combinedExt, todir: jsdeploydir)
+  ant.copy(file: minifiedExt, todir: jsdeploydir)
+}

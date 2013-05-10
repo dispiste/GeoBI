@@ -1,5 +1,10 @@
 Ext.namespace('App');
 
+/**
+ * A container showing a button with the dimension name (used to select members of
+ * this dimension) and a delete button to remove this dimension from the dimension
+ * list.
+ */
 App.DimensionSelector = function(dimension) {
     var config = {
         defaults: {

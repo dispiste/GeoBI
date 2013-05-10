@@ -1,7 +1,7 @@
 Ext.namespace('App');
 
 /**
- * A button with menu to select dimension
+ * A button that triggers a menu (list) to select dimension.
  */
 App.DimensionChooser = Ext.extend(Ext.Button, {
 
@@ -74,6 +74,8 @@ App.DimensionChooser = Ext.extend(Ext.Button, {
 
     /**
      * Method: filter
+     * Filters the dimension store to avoid selecting a dimension twice
+     * (hides selected measures).
      */
     filter: function() {
         var filter = function(item) {
