@@ -22,7 +22,7 @@ App.report = function() {
                 '?QUERYID='+App.queryId+
                 '&STYLEID='+App.styleId+
                 '&FORMAT_OPTIONS=dpi:254';
-            var chartUrl = hostPort + App.chart.getChartUrl();
+            var chartUrl = hostPort + window.location.pathname + App.chart.getChartUrl();
 
             // table
             var relativeOnly = App.table.isRelativeOnly();
