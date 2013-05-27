@@ -103,7 +103,7 @@ layouts:
             items:
               - !text
                 align: left
-                text: © ESPON OLAP Cube Viewer
+                text: (C) TEAM ESPON M4D - UAB. This map does not necessarily reflect the opinion of the ESPON Monitoring Committee. Part-financed by the European Regional Development Fund.
               - !text
                 align: right
                 text: '${pageNum} / ${pageTot}'
@@ -168,7 +168,7 @@ layouts:
             items:
               - !text
                 align: left
-                text:  © ESPON OLAP Cube Viewer
+                text: (C) TEAM ESPON M4D - UAB. This map does not necessarily reflect the opinion of the ESPON Monitoring Committee. Part-financed by the European Regional Development Fund.
               - !text
                 align: right
                 text: '${pageNum} / ${pageTot}'
