@@ -99,6 +99,7 @@ layouts:
         height: 30
         items:
           - !columns
+            widths: [85, 15]
             items:
               - !text
                 align: left
@@ -163,6 +164,7 @@ layouts:
         height: 30
         items:
           - !columns
+            widths: [90, 10] 
             items:
               - !text
                 align: left
