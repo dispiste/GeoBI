@@ -436,7 +436,7 @@ App.queryMgr = function(options) {
         }
         // and we add an additionnal member for the relative values
         Ext.each([].concat(_col.members), function(member, index) {
-            var name = member.slice(0, member.lastIndexOf(']')) + ' %]';
+			var name = member.slice(0, member.lastIndexOf('[')) + '[% of ' + member.slice(member.lastIndexOf('[')+1);
             var operation = '100.0 * ' + member + 
                 ' / ' + _col.allMember;
             additionalMembers.push({
