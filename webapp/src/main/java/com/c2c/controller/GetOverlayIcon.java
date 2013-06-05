@@ -43,7 +43,6 @@ public class GetOverlayIcon extends AbstractQueryingController {
     public enum ChartType {
         PIE, BAR;
     }
-    private static Boolean legend ;
     
     @RequestMapping(method = RequestMethod.GET)
     public void getchart(HttpServletRequest request,
@@ -64,13 +63,14 @@ public class GetOverlayIcon extends AbstractQueryingController {
         } else {
             response.setContentType(format);
         }
+        boolean legend;
         if (onlyLegend == null)
         {
-        	this.legend = false;
+        	legend = false;
         }
         else
         {
-        	this.legend = onlyLegend;
+        	legend = onlyLegend;
 
             response.setContentType(format);
             response.addHeader("Cache-Control", "no-cache");
@@ -80,17 +80,9 @@ public class GetOverlayIcon extends AbstractQueryingController {
         if (labels == null)
         	labels = "";
         
+        
         try {
-            switch (ChartType.valueOf(type.toUpperCase())) {
-                case PIE:
-                    renderPieChart(parseData(data), parseLabels(labels), width, height, outputStream);
-                    break;
-                case BAR:
-                    renderBarChart(parseData(data), parseLabels(labels), width, height, outputStream);
-                    break;
-                default:
-                    throw new IllegalArgumentException(type + " not supported overlay type");
-            }
+        	renderChart(parseData(data), parseLabels(labels), width, height, type, legend, outputStream);
         } catch (Exception e)
         {
         	e.printStackTrace();
@@ -100,74 +92,7 @@ public class GetOverlayIcon extends AbstractQueryingController {
 
     }
 
-    private static void renderPieChart(double[] data, String[] labels, int width, int height, OutputStream outputStream) throws IOException {
-        DefaultPieDataset pieDataset = new DefaultPieDataset();
-
-        for (int i = 0; i < data.length; i++) {
-        	if ((labels.length > i) && (! labels[i].equals("")))
-        		pieDataset.setValue(labels[i], data[i]);        		
-        	else /* no label */
-        		pieDataset.setValue(Integer.valueOf(i), data[i]);
-        }
-        JFreeChart chart ;
-        if (legend == false)
-        	chart = ChartFactory.createPieChart(null, pieDataset, false, false, false);
-        else
-        	chart = ChartFactory.createPieChart(null, pieDataset, true, true, false);
-        	
-        chart.setBackgroundPaint(TRANSPARENT);
-        chart.setBorderVisible(false);
-
-        PiePlot plot = (PiePlot) chart.getPlot();
-        java.util.List l = pieDataset.getKeys();
-
-        for (int i = 0; i < Math.min(pieDataset.getItemCount(), 8); i++) {
-            plot.setSectionPaint((Comparable) l.get(i), GetChart.DEFAULT_COLORS[i]);
-        }
-
-        plot.setBackgroundPaint(TRANSPARENT);
-
-        plot.setLabelGenerator(null);
-        plot.setInteriorGap(0);
-        plot.setShadowXOffset(0);
-        plot.setShadowYOffset(0);
-        plot.setOutlineVisible(false);
-        
-        if (legend == false)
-        {
-        	ChartUtilities.writeChartAsPNG(outputStream, chart, width, height);
-        }
-        else
-        {
-        	LegendTitle lgd = chart.getLegend();
-        	lgd.setMargin(0,0,1,1);
-        	lgd.setBackgroundPaint(TRANSPARENT);
-        	lgd.setBorder(BlockBorder.NONE);
-
-        	
-        	BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2 = img.createGraphics();
-            // TODO : should be ok for the main requests, but could overlap in
-            // some cases
-            Size2D size = lgd.arrange(g2, new RectangleConstraint(new Range(0.0, width * 1.5),new Range(0.0, height)));
-            //Size2D size = lgd.arrange(g2, RectangleConstraint.NONE);
-            g2.dispose();
-            int w = (int) Math.rint(size.width);
-            int h = (int) Math.rint(size.height);
-            BufferedImage img2 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g22 = img2.createGraphics();
-            lgd.draw(g22, new Rectangle2D.Double(0, 0, w, h));
-        	try {
-        		ChartUtilities.writeBufferedImageAsPNG(outputStream, img2);                
-        	}catch (Exception e) {
-        		e.printStackTrace();
-             } finally {
-            	 g22.dispose();
-             }
-        }
-    }
-
-    private static void renderBarChart(double[] data, String[] labels, int width, int height, OutputStream outputStream) throws IOException {
+    private static JFreeChart getBarChart(double[] data, String[] labels, boolean legend) throws IOException {
         DefaultCategoryDataset catDataset = new DefaultCategoryDataset();
 
         for (int i = 0; i < data.length; i++) {
@@ -211,36 +136,107 @@ public class GetOverlayIcon extends AbstractQueryingController {
         r.setDefaultShadowsVisible(false);
         r.setDrawBarOutline(false);
         r.setShadowVisible(false);
-        
+        return chart;
+    }
+    
+    private static JFreeChart getPieChart(double[] data, String[] labels, boolean legend) throws IOException {
+        DefaultPieDataset pieDataset = new DefaultPieDataset();
+
+        for (int i = 0; i < data.length; i++) {
+        	if ((labels.length > i) && (! labels[i].equals("")))
+        		pieDataset.setValue(labels[i], data[i]);        		
+        	else /* no label */
+        		pieDataset.setValue(Integer.valueOf(i), data[i]);
+        }
+        JFreeChart chart ;
+        if (legend == false)
+        	chart = ChartFactory.createPieChart(null, pieDataset, false, false, false);
+        else
+        	chart = ChartFactory.createPieChart(null, pieDataset, true, true, false);
+        	
+        chart.setBackgroundPaint(TRANSPARENT);
+        chart.setBorderVisible(false);
+
+        PiePlot plot = (PiePlot) chart.getPlot();
+        java.util.List l = pieDataset.getKeys();
+
+        for (int i = 0; i < Math.min(pieDataset.getItemCount(), 8); i++) {
+            plot.setSectionPaint((Comparable) l.get(i), GetChart.DEFAULT_COLORS[i]);
+        }
+
+        plot.setBackgroundPaint(TRANSPARENT);
+
+        plot.setLabelGenerator(null);
+        plot.setInteriorGap(0);
+        plot.setShadowXOffset(0);
+        plot.setShadowYOffset(0);
+        plot.setOutlineVisible(false);
+        return chart;
+    }
+    
+    private static BufferedImage chartLegendToBuffImage(JFreeChart chart, int width, int height) {
+    	LegendTitle lgd = chart.getLegend();
+    	lgd.setMargin(0,0,1,1);
+    	lgd.setBackgroundPaint(TRANSPARENT);
+    	lgd.setBorder(BlockBorder.NONE);
+    	
+    	BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = img.createGraphics();
+        // TODO : should be ok for the main requests, but could overlap in some cases
+        Size2D size = lgd.arrange(g2, new RectangleConstraint(new Range(0.0, width * 1.5),new Range(0.0, height)));
+        g2.dispose();
+        int w = (int) Math.rint(size.width);
+        int h = (int) Math.rint(size.height);
+        BufferedImage img2 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g22 = img2.createGraphics();
+        lgd.draw(g22, new Rectangle2D.Double(0, 0, w, h));
+        g22.dispose();
+        return img2;
+    }
+    
+    private static void renderChart(double[] data, String[] labels, int width, int height, String type, boolean legend, OutputStream outputStream) throws IOException {
+    	JFreeChart chart = null;
+        switch (ChartType.valueOf(type.toUpperCase())) {
+                case PIE:
+                    chart = getPieChart(data, labels, legend);
+                    break;
+                case BAR:
+                	chart = getBarChart(data, labels, legend);
+                    break;
+                default:
+                    throw new IllegalArgumentException(type + " not supported overlay type");
+        }
         if (legend == false)
         {
         	ChartUtilities.writeChartAsPNG(outputStream, chart, width, height);
         }
         else
         {
-        	LegendTitle lgd = chart.getLegend();
-        	lgd.setMargin(0,0,1,1);
-        	lgd.setBorder(BlockBorder.NONE);
-        	lgd.setBackgroundPaint(TRANSPARENT);
-        	BufferedImage img = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2 = img.createGraphics();
-            Size2D size = lgd.arrange(g2, new RectangleConstraint(new Range(0.0, width * 1.5),new Range(0.0, height)));
-            g2.dispose();
-            int w = (int) Math.rint(size.width);
-            int h = (int) Math.rint(size.height);
-            BufferedImage img2 = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g22 = img2.createGraphics();
-            lgd.draw(g22, new Rectangle2D.Double(0, 0, w, h));
-        	try {
-        		ChartUtilities.writeBufferedImageAsPNG(outputStream, img2);                
-        	}catch (Exception e) {
-        		e.printStackTrace();
-             } finally {
-            	 g22.dispose();
-             }
+        	ChartUtilities.writeBufferedImageAsPNG(outputStream, chartLegendToBuffImage(chart, width, height));
         }
     }
-
+    
+    public static BufferedImage renderChart(double[] data, String[] labels, int width, int height, String type, boolean legend) throws IOException {
+    	JFreeChart chart = null;
+        switch (ChartType.valueOf(type.toUpperCase())) {
+                case PIE:
+                    chart = getPieChart(data, labels, legend);
+                    break;
+                case BAR:
+                	chart = getBarChart(data, labels, legend);
+                    break;
+                default:
+                    throw new IllegalArgumentException(type + " not supported overlay type");
+        }
+        if (legend == false)
+        {
+        	return chart.createBufferedImage(width, height);
+        }
+        else
+        {
+        	return chartLegendToBuffImage(chart, width, height);
+        }
+    }
 
     private static double[] parseData(String data) {
         String[] parts = data.split(",");
@@ -255,15 +251,29 @@ public class GetOverlayIcon extends AbstractQueryingController {
 
         return values;
     }
-    
     private static String[] parseLabels(String data) {
-        String[] parts = data.split(",");
+		String[] parts = data.split(",");
         String[] values = new String[parts.length];
-
         for (int i = 0; i < parts.length; i++) {
         		values[i] = parts[i];
         }
-
         return values;
     }
+
+    /*
+    private static String[] parseLabels(String data) {
+    	ArrayList parts;
+		try {
+			parts=(JSONArray)jsonParser.parse("["+data+"]");
+		} catch (ParseException e) {
+			parts = new ArrayList(); 
+			Collections.addAll(parts, data.split(","));
+		}
+        String[] values = new String[parts.size()];
+        for (int i = 0; i < parts.size(); i++) {
+        		values[i] = (String)parts.get(i);
+        }
+
+        return values;
+    }*/
 }

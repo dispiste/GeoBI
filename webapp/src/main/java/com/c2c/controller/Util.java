@@ -43,6 +43,7 @@ public final class Util {
     }
 
     public static enum SYMBOL_TYPE { NONE, PROPORTIONAL_SYMBOLS, BARS, PIES }
+    private static String MEMBER_SEPARATOR=", ";
     
 
     public static Style createDefaultStyle() {
@@ -100,7 +101,7 @@ public final class Util {
     			for (IndicatorMetadata i : indicators) {
     				for (DataQueryLevel l : c.getLevels()) {
     					for (DataQueryMember m : l.getMembers()) {
-    						newIndicators.add(new IndicatorMetadata(i.getName() + " / " + m.getName(),
+    						newIndicators.add(new IndicatorMetadata(i.getName() + ", " + m.getName(),
     								i.getDataIndex() + "_" + DataQuery.getUniqueId(m.getUniqueName())));
     					}
     				}
@@ -137,13 +138,14 @@ public final class Util {
     	StringBuffer buf = new StringBuffer();
     	
     	HashMap<String, String> indic = lookupIndicators(results);
-    	for (int i = 0 ; i < indicList.length ; i++)
+    	int last = indicList.length - 1;
+    	for (int i = 0 ; i < last ; i++)
     	{
     		buf.append(indic.get(indicList[i]));
-    		if (i!=indicList.length-1) {
-    			buf.append(" / ");
-    		}
+    		buf.append(MEMBER_SEPARATOR);
     	}
+    	buf.append(indic.get(indicList[last]));
+    	
     	return buf.toString();
     }
     
@@ -152,7 +154,7 @@ public final class Util {
     	String dims = "";
     	for (DataQueryDimension c : results.getColumns()) {
     		if (!dims.equals("")) {
-    			dims += " / ";
+    			dims += MEMBER_SEPARATOR;
     		}
     		dims += c.getUniqueName().replace("[", "").replace("]", "");
     	}
