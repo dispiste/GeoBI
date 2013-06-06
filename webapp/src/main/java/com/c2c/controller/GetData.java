@@ -104,7 +104,18 @@ public class GetData extends AbstractQueryingController {
             for (AttributeDescriptor d : featureSource.getSchema().getAttributeDescriptors()) {
                 if(!(d instanceof GeometryDescriptor)) {
                 	String name = d.getName().toString();
-                	feature.put(name.replace("[", "").replace("]", ""), current.getAttribute(name));
+                 	Object value = current.getAttribute(name);
+                	// NaN and Infinite values are not encoded by org.json, so replace them with null
+                    if (value instanceof Double) {
+                        if (((Double)value).isInfinite() || ((Double)value).isNaN()) {
+                            value = null;
+                        }
+                    } else if (value instanceof Float) {
+                        if (((Float)value).isInfinite() || ((Float)value).isNaN()) {
+                            value = null;
+                        }
+                    }
+                	feature.put(name.replace("[", "").replace("]", ""), value);
                 }
             }
             rows.put(feature);
