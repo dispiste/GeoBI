@@ -112,17 +112,6 @@ App.queryBuilder = function(options) {
         ]
     });
 
-    /*
-    // FIXME: selects the first measure if there is only one measure
-    var selectFirstMeasure = function() {
-        var r = measureCombo.store.getAt(0);
-        var value = r.get('MEASURE_UNIQUE_NAME');
-        measureCombo.setValue(value);
-        App.queryMgr.addMeasure(
-            value);
-    };
-     */
-
     var relativeCheckBox = new Ext.form.Checkbox({
         boxLabel: 'Relative values (%)',
         disabled: true

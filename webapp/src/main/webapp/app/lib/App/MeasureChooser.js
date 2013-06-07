@@ -61,6 +61,10 @@ App.MeasureChooser = Ext.extend(Ext.Button, {
                     scope: this
                 }]);
         }, this);
+        // select the first measure found if there is only one measure
+        if (this.measureStore.getCount()==1) {
+            this.onMeasureSelect(this.menu.getComponent(0));
+        }
     },
 
     /**
