@@ -120,12 +120,12 @@ App.queryBuilder = function(options) {
         'check': function(checkbox, checked) {
             App.queryMgr.useRelativeValues(checked);
         },
-        'disable': function(checkbox, checked) {
+        'disable': function(checkbox) {
             // force non-relative values when checkbox is disabled (even when checked)
             App.queryMgr.useRelativeValues(false);
         },
-        'enable': function(checkbox, checked) {
-            App.queryMgr.useRelativeValues(checked);
+        'enable': function(checkbox) {
+            App.queryMgr.useRelativeValues(checkbox.checked);
         }
     });
     
