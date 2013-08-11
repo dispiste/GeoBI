@@ -208,7 +208,7 @@ App.RemoveNoData = Ext.extend(App.ExecutionRule, {
                 }
                 for (var i=0; i<allMembers.length; i++) {
                     if (!allMembers[i].contains("99 NO NUTS")
-                            && !allMembers[i].contains("No Data")) { // other no-data members should be added here
+                            && !allMembers[i].toLowerCase().contains("no data")) { // other no-data members should be added here
                         members.push(allMembers[i]);
                     }
                 }

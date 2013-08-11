@@ -64,112 +64,137 @@
     <!-- Here starts the definition of the cubes -->
 
     <Cube name="pg_CLC_90_00" enabled="true">
-        <Table name="e012_nov2012_2" />
+        <Table name="es013_espon_june013_3" />
 
         <Dimension name="NUTS 2010" foreignKey="prox_nuts10">
-            <Hierarchy name="NUTS 2010" hasAll="true" allMemberName="All NUTS 2010" primaryKey="value_">
-                <Table name="e012_n10"/>
-                <Level name="NUTS 2010 LEVEL 0" table="e012_n10" column="n0c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n0" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
+            <Hierarchy name="NUTS 2010" hasAll="true" allMemberName="All NUTS 2010" primaryKey="id">
+                <Table name="es013_n10"/>
+                <Level name="NUTS 2010 LEVEL 0" table="es013_n10" column="n0c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l0" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l0" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2010 LEVEL 1" table="e012_n10" column="n1c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n1" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n1" type="Geometry" />
+                <Level name="NUTS 2010 LEVEL 1" table="es013_n10" column="n1c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l1" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l1" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2010 LEVEL 2" table="e012_n10" column="n2c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n2" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n2" type="Geometry" />
+                <Level name="NUTS 2010 LEVEL 2" table="es013_n10" column="n2c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l2" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l2" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2010 LEVEL 3" table="e012_n10" column="n3c_nm" uniqueMembers="true">
-                    <Property name="geom" column="the_geom_n3" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n3" type="Geometry" />
+                <Level name="NUTS 2010 LEVEL 3" table="es013_n10" column="n3c_nm" uniqueMembers="true">
+                    <Property name="geom" column="the_geom_l3" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l3" type="Geometry" />
                 </Level>
             </Hierarchy>
         </Dimension>
 
-        <Dimension name="NUTS 2006" foreignKey="prox_n06">
-            <Hierarchy name="NUTS 2006" hasAll="true" allMemberName="All NUTS 2006" primaryKey="fid_">
-                <Table name="e012_n06"/>
-                <Level name="NUTS 2006 LEVEL 0" table="e012_n06" column="n0c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n0" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
+        <Dimension name="NUTS 2006" foreignKey="prox_nuts06">
+            <Hierarchy name="NUTS 2006" hasAll="true" allMemberName="All NUTS 2006" primaryKey="id">
+                <Table name="es013_n06"/>
+                <Level name="NUTS 2006 LEVEL 0" table="es013_n06" column="n0c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l0" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l0" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2006 LEVEL 1" table="e012_n06" column="n1c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n1" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n1" type="Geometry" />
+                <Level name="NUTS 2006 LEVEL 1" table="es013_n06" column="n1c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l1" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l1" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2006 LEVEL 2" table="e012_n06" column="n2c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n2" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n2" type="Geometry" />
+                <Level name="NUTS 2006 LEVEL 2" table="es013_n06" column="n2c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l2" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l2" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2006 LEVEL 3" table="e012_n06" column="n3c_nm" uniqueMembers="true">
-                    <Property name="geom" column="the_geom_n3" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n3" type="Geometry" />
+                <Level name="NUTS 2006 LEVEL 3" table="es013_n06" column="n3c_nm" uniqueMembers="true">
+                    <Property name="geom" column="the_geom_l3" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l3" type="Geometry" />
                 </Level>
             </Hierarchy>
         </Dimension>
 
         <Dimension name="NUTS 2003" foreignKey="prox_nuts03">
-            <Hierarchy name="NUTS 2003" hasAll="true" allMemberName="All NUTS 2003" primaryKey="value_">
-                <Table name="e012_n03"/>
-                <Level name="NUTS 2003 LEVEL 0" table="e012_n03" column="n0c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n0" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
+            <Hierarchy name="NUTS 2003" hasAll="true" allMemberName="All NUTS 2003" primaryKey="id">
+                <Table name="es013_n03"/>
+                <Level name="NUTS 2003 LEVEL 0" table="es013_n03" column="n0c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l0" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l0" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2003 LEVEL 1" table="e012_n03" column="n1c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n1" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n1" type="Geometry" />
+                <Level name="NUTS 2003 LEVEL 1" table="es013_n03" column="n1c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l1" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l1" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2003 LEVEL 2" table="e012_n03" column="n2c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n2" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n2" type="Geometry" />
+                <Level name="NUTS 2003 LEVEL 2" table="es013_n03" column="n2c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l2" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l2" type="Geometry" />
                 </Level>
-                <Level name="NUTS 2003 LEVEL 3" table="e012_n03" column="n3c_nm" uniqueMembers="true">
-                    <Property name="geom" column="the_geom_n3" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n3" type="Geometry" />
+                <Level name="NUTS 2003 LEVEL 3" table="es013_n03" column="n3c_nm" uniqueMembers="true">
+                    <Property name="geom" column="the_geom_l3" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l3" type="Geometry" />
                 </Level>
             </Hierarchy>
         </Dimension>
         
-        <Dimension name="NUTS 1999" foreignKey="prox_n99">
-            <Hierarchy name="NUTS 1999" hasAll="true" allMemberName="All NUTS 1999" primaryKey="value_">
-                <Table name="e012_n99"/>
-                <Level name="NUTS 1999 LEVEL 0" table="e012_n99" column="n0c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n0" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n0" type="Geometry" />
+        <Dimension name="NUTS 1999" foreignKey="prox_nuts99">
+            <Hierarchy name="NUTS 1999" hasAll="true" allMemberName="All NUTS 1999" primaryKey="id">
+                <Table name="es013_n99"/>
+                <Level name="NUTS 1999 LEVEL 0" table="es013_n99" column="n0c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l0" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l0" type="Geometry" />
                 </Level>
-                <Level name="NUTS 1999 LEVEL 1" table="e012_n99" column="n1c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n1" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n1" type="Geometry" />
+                <Level name="NUTS 1999 LEVEL 1" table="es013_n99" column="n1c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l1" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l1" type="Geometry" />
                 </Level>
-                <Level name="NUTS 1999 LEVEL 2" table="e012_n99" column="n2c_nm" uniqueMembers="false">
-                    <Property name="geom" column="the_geom_n2" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n2" type="Geometry" />
+                <Level name="NUTS 1999 LEVEL 2" table="es013_n99" column="n2c_nm" uniqueMembers="false">
+                    <Property name="geom" column="the_geom_l2" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l2" type="Geometry" />
                 </Level>
-                <Level name="NUTS 1999 LEVEL 3" table="e012_n99" column="n3c_nm" uniqueMembers="true">
-                    <Property name="geom" column="the_geom_n3" type="Geometry" />
-                    <Property name="pointgeom" column="the_geom_baryc_n3" type="Geometry" />
+                <Level name="NUTS 1999 LEVEL 3" table="es013_n99" column="n3c_nm" uniqueMembers="true">
+                    <Property name="geom" column="the_geom_l3" type="Geometry" />
+                    <Property name="pointgeom" column="the_geom_baryc_l3" type="Geometry" />
                 </Level>
             </Hierarchy>
         </Dimension>
 
-    <Dimension name="ELEVATION BREAKDOWN" foreignKey="ebk0">
-        <Hierarchy name="EBK" hasAll="true" allMemberName="All Elevation Breakdowns" primaryKey="ebk_id">
-            <Table name="defs_ebkv13"/>
-            <Level name="ELEVATION BREAKDOWN" table="defs_ebkv13" column="ebk_nm" uniqueMembers="true">
-<!--
-	                <Property name="geom" column="the_geom" type="Geometry" />
+    <Dimension name="LARGE URBAN ZONES 2012" foreignKey="luz12">
+        <Hierarchy name="LUZ 2012" hasAll="true" allMemberName="All LUZ 2012" primaryKey="id">
+            <Table name="es013_luz12"/>
+            <Level name="LUZ 2012" table="es013_luz12" column="luzcnam" uniqueMembers="true">
+                <Property name="geom" column="the_geom" type="Geometry" />
                 <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
--->
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="LARGE URBAN ZONES 2004" foreignKey="luz04">
+        <Hierarchy name="LUZ" hasAll="true" allMemberName="All LUZ" primaryKey="id">
+            <Table name="es013_luz04"/>
+            <Level name="LUZ" table="es013_luz04" column="luzc_nm" uniqueMembers="true">
+                <Property name="geom" column="the_geom" type="Geometry" />
+                <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="URBAN MORPHOLOGICAL ZONES 2000" foreignKey="umz00">
+        <Hierarchy name="UMZ 2000" hasAll="true" allMemberName="All UMZ 2000" primaryKey="id">
+            <Table name="es013_umz00"/>
+            <Level name="UMZ 2000" table="es013_umz00" column="cityname_0" uniqueMembers="true">
+                <Property name="geom" column="the_geom" type="Geometry" />
+                <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
+            </Level>
+        </Hierarchy>
+    </Dimension>
+    <Dimension name="FUNCTIONAL URBAN AREAS" foreignKey="fua">
+        <Hierarchy name="FUA" hasAll="true" allMemberName="All FUA" primaryKey="id">
+            <Table name="es013_def_fua"/>
+            <Level name="FUA" table="es013_def_fua" column="unitc_name" uniqueMembers="true">
+                <Property name="geom" column="the_geom" type="Geometry" />
+                <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
             </Level>
         </Hierarchy>
     </Dimension>
 
-    <Dimension name="LARGE URBAN ZONES" foreignKey="luz_ndt">
-        <Hierarchy name="LUZ" hasAll="true" allMemberName="All LUZ" primaryKey="grid_id">
-            <Table name="es012_luz"/>
-            <Level name="LUZ" table="es012_luz" column="luz_name" uniqueMembers="true">
+    <Dimension name="MORPHOLOGICAL URBAN AREAS" foreignKey="mua">
+        <Hierarchy name="MUA" hasAll="true" allMemberName="All MUA" primaryKey="id">
+            <Table name="es013_def_mua"/>
+            <Level name="MUA" table="es013_def_mua" column="code" uniqueMembers="true">
                 <Property name="geom" column="the_geom" type="Geometry" />
                 <Property name="pointgeom" column="the_geom_baryc" type="Geometry" />
             </Level>
@@ -187,29 +212,29 @@
 	<DimensionUsage name="CHANGES 00-06" source="CHANGES" foreignKey="ch00_06" />
 
 	<!-- Definition of measures and calculated members -->
-    <Measure name="POPULATION 2011 (1000 inh.)" column="pop11p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2010 (1000 inh.)" column="pop10p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2009 (1000 inh.)" column="pop09p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2008 (1000 inh.)" column="pop08p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2007 (1000 inh.)" column="pop07p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2006 (1000 inh.)" column="pop06p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2005 (1000 inh.)" column="pop05p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2004 (1000 inh.)" column="pop04p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2003 (1000 inh.)" column="pop03p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2002 (1000 inh.)" column="pop02p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2001 (1000 inh.)" column="pop01p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 2000 (1000 inh.)" column="pop00p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1999 (1000 inh.)" column="pop99p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1998 (1000 inh.)" column="pop98p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1997 (1000 inh.)" column="pop97p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1996 (1000 inh.)" column="pop96p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1995 (1000 inh.)" column="pop95p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1994 (1000 inh.)" column="pop94p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1993 (1000 inh.)" column="pop93p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1992 (1000 inh.)" column="pop92p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1991 (1000 inh.)" column="pop91p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="POPULATION 1990 (1000 inh.)" column="pop90p" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
-    <Measure name="AREA (Ha)" column="area" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+
+    <Measure name="Population 2009 (1000 inh.)" column="pop09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Population 2006 (1000 inh.)" column="pop06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Population 2003 (1000 inh.)" column="pop03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Population 2000 (1000 inh.)" column="pop00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2009 (in PPS)" column="pps00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2006 (in PPS)" column="pps03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2003 (in PPS)" column="pps06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2000 (in PPS)" column="pps09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2009 (million euro)" column="gdp00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2006 (million euro)" column="gdp03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2003 (million euro)" column="gdp06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="GDP 2000 (million euro)" column="gdp09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Births 2009 (thousand)" column="birth00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Births 2006 (thousand)" column="birth03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Births 2003 (thousand)" column="birth06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Births 2000 (thousand)" column="birth09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+	<Measure name="Deaths 2009 (thousand)" column="death00" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Deaths 2006 (thousand)" column="death03" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Deaths 2003 (thousand)" column="death06" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    <Measure name="Deaths 2000 (thousand)" column="death09" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
+    
+    <Measure name="Area (ha)" column="area" aggregator="sum" datatype="Numeric" formatString="#,##0.0"/>
     </Cube>
 
     <!-- Add support for geo-analytical operators brought by GeoMondrian -->
