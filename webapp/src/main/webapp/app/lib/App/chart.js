@@ -2,7 +2,11 @@ Ext.namespace('App');
 
 App.chart = function() {
     // private
-
+    var disabled = false;
+    var setDisabled = function(d) {
+        disabled = d;
+    }
+    
     var onItemCheck = function(item) {
         type = item.charttype;
         updateChart();
@@ -152,8 +156,10 @@ App.chart = function() {
     };
 
     var loadIndicators = function() {
-        indicatorsStore.loadData(App.metadata);
-        updateChart();
+        if (!disabled) {
+            indicatorsStore.loadData(App.metadata);
+            updateChart();
+        }
     };
 
     App.queryMgr.events.on({
@@ -163,8 +169,13 @@ App.chart = function() {
             relativeAbsoluteBtn.setDisabled(true);
         },
         'queryregistered': function() {
-            container.show(false);
-            container.setDisabled(false);
+            if (disabled) {
+                container.hide();
+            }
+            else {
+                container.show();
+                container.setDisabled(false);
+            }
         }
     });
 
@@ -172,9 +183,8 @@ App.chart = function() {
     return {
         init: function() {
         },
-
         panel: container,
-
-        getChartUrl: getChartUrl
+        getChartUrl: getChartUrl,
+        setDisabled: setDisabled
     };
 }();

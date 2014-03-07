@@ -2,6 +2,11 @@ Ext.namespace('App');
 
 App.map = function() {
     // private
+    var disabled = false;
+    var setDisabled = function(d) {
+        disabled = d;
+    }
+
     var mapStyler = App.mapStyler;
 
     var styleBtn = new Ext.Button({
@@ -439,7 +444,15 @@ App.map = function() {
     };
 
     App.queryMgr.events.on({
-        'metadataloaded': loadMap
+        'metadataloaded': loadMap,
+        'queryregistered': function() {
+            if (disabled) {
+                container.hide();
+            }
+            else {
+                container.show();
+            }
+        }
     });
 
     // public
@@ -447,9 +460,8 @@ App.map = function() {
         init: function(){
             addControls();
         },
-
         panel: container,
-
-        mapPanel: mapPanel
+        mapPanel: mapPanel,
+        setDisabled: setDisabled
     };
 }();

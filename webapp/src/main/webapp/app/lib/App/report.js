@@ -72,6 +72,7 @@ App.report = function() {
 
     var container = new Ext.Container({
         border: false,
+        cls: 'indented-block',
         disabled: true,
         items: [
             button

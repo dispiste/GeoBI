@@ -183,6 +183,45 @@ App.queryBuilder = function(options) {
         ]
     });
 
+    var showMapCheckBox = new Ext.form.Checkbox({
+        boxLabel: 'Show map',
+        checked: true
+    });
+    showMapCheckBox.on({
+        'check': function(checkbox, checked) {
+            App.map && App.map.setDisabled(!checked);
+        }
+    });
+    
+    var showTableCheckBox = new Ext.form.Checkbox({
+        boxLabel: 'Show table',
+        checked: true
+    });
+    showTableCheckBox.on({
+        'check': function(checkbox, checked) {
+            App.table && App.table.setDisabled(!checked);
+        }
+    });
+    
+    var showChartsCheckBox = new Ext.form.Checkbox({
+        boxLabel: 'Show charts',
+        checked: true
+    });
+    showChartsCheckBox.on({
+        'check': function(checkbox, checked) {
+            App.chart && App.chart.setDisabled(!checked);
+        }
+    });
+    
+    
+    var checkboxPanel = new Ext.Panel({
+        items:[
+               showMapCheckBox,
+               showTableCheckBox,
+               showChartsCheckBox
+        ]
+    });
+    
     var queryButton = new Ext.Button({
         text: 'Execute query',
         iconCls: 'execute',
@@ -219,7 +258,8 @@ App.queryBuilder = function(options) {
                 spatialBlock,
                 thematicBlock,
                 measureBlock,
-                mdxInfoBlock
+                mdxInfoBlock,
+                checkboxPanel
             ],
             buttons: [queryButton]
         })

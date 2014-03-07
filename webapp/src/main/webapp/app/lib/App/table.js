@@ -22,6 +22,11 @@ App.table = function() {
         gridCt.removeAll();
     };
 
+    var disabled = false;
+    var setDisabled = function(d) {
+        disabled = d;
+    }
+
     var createGrid = function() {
 
         var relativeOnly = isRelativeOnly(); 
@@ -79,39 +84,41 @@ App.table = function() {
 
         // magic cell auto sizing !
         App.data.on('load', function() {
-            // See http://www.sencha.com/forum/showthread.php?82965-Dblclick-to-autosize-grid-columns
-            var view = grid.getView();
-            var cm = grid.getColumnModel();
-            var len = cm.getColumnCount();
-            var width;
-            for (var i = 0; i < len; i++) {
-                // get the header cell width
-                var el = view.getHeaderCell(i);
-                el = el.firstChild;
-                el.style.width = '0px';
-                width = el.scrollWidth;
-                el.style.width = 'auto';
-                // get the wider content cell
-                for (var rowIndex = 0, count = grid.getStore().getCount(); rowIndex < count; rowIndex++) {
-                    el = view.getCell(rowIndex, i).firstChild;
+            if (!disabled) {
+                // See http://www.sencha.com/forum/showthread.php?82965-Dblclick-to-autosize-grid-columns
+                var view = grid.getView();
+                var cm = grid.getColumnModel();
+                var len = cm.getColumnCount();
+                var width;
+                for (var i = 0; i < len; i++) {
+                    // get the header cell width
+                    var el = view.getHeaderCell(i);
+                    el = el.firstChild;
                     el.style.width = '0px';
-                    width = Math.max(width, el.scrollWidth);
+                    width = el.scrollWidth;
                     el.style.width = 'auto';
+                    // get the wider content cell
+                    for (var rowIndex = 0, count = grid.getStore().getCount(); rowIndex < count; rowIndex++) {
+                        el = view.getCell(rowIndex, i).firstChild;
+                        el.style.width = '0px';
+                        width = Math.max(width, el.scrollWidth);
+                        el.style.width = 'auto';
+                    }
+                    // use the max width between header and content cells
+                    view.onColumnSplitterMoved(i, width + 8);
                 }
-                // use the max width between header and content cells
-                view.onColumnSplitterMoved(i, width + 8);
-            }
-
-            // also manage sort of a maxHeight, if data inside grid is short
-            // then use this height instead of a fixed value 
-            var headerHeight = Ext.select('.x-grid3-header', true, grid.body.dom).first().getHeight();
-            var scrollerHeight = Ext.select('.x-grid3-body', true, grid.body.dom).first().getHeight(); 
-            var height = headerHeight + scrollerHeight + 2;
-
-            if (height < 400) {
-                gridCt.setHeight(height);
-            } else {
-                gridCt.setHeight(400);
+    
+                // also manage sort of a maxHeight, if data inside grid is short
+                // then use this height instead of a fixed value 
+                var headerHeight = Ext.select('.x-grid3-header', true, grid.body.dom).first().getHeight();
+                var scrollerHeight = Ext.select('.x-grid3-body', true, grid.body.dom).first().getHeight(); 
+                var height = headerHeight + scrollerHeight + 2;
+    
+                if (height < 400) {
+                    gridCt.setHeight(height);
+                } else {
+                    gridCt.setHeight(400);
+                }
             }
         });
 
@@ -165,7 +172,9 @@ App.table = function() {
 
     var loadData = function() {
         destroyGrid();
-        createGrid();
+        if (!disabled) {
+            createGrid();
+        }
     };
 
     var relativeOnlyCheckbox = new Ext.form.Checkbox({
@@ -208,15 +217,21 @@ App.table = function() {
             relativeOnlyCheckbox.setDisabled(true);
         },
         'queryregistered': function() {
-            container.show(false);
-            container.setDisabled(false);
-            relativeOnlyCheckbox.setDisabled(!App.queryMgr.getQuery().relative);
+            if (disabled) {
+                container.hide();
+            }
+            else {
+                container.show();
+                container.setDisabled(false);
+                relativeOnlyCheckbox.setDisabled(!App.queryMgr.getQuery().relative);                
+            }
         }
     });
 
     // public
     return { 
         panel: container,
-        isRelativeOnly: isRelativeOnly
+        isRelativeOnly: isRelativeOnly,
+        setDisabled: setDisabled
     };
 }();
