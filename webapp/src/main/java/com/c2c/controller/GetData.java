@@ -1,6 +1,7 @@
 package com.c2c.controller;
 
 import org.geotools.data.FeatureSource;
+import org.geotools.data.Query;
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.geojson.feature.FeatureJSON;
@@ -54,31 +55,39 @@ public class GetData extends AbstractQueryingController {
             @RequestParam(value = "QUERYID") String queryId,
             @RequestParam(value = "ATTR", required = false) String attr,
             @RequestParam(value = "FORMAT", required = false) String format,
-            @RequestParam(value = "TARGETSRS", required = false) String targetSrs
+            @RequestParam(value = "TARGETSRS", required = false) String targetSrs,
+            @RequestParam(value = "START", required = false) String start,
+            @RequestParam(value = "LIMIT", required = false) String limit
     ) throws Exception {
 
         response.setContentType("application/json; charset=UTF-8");
 
-    	DataQueryFeatureSource results = getCache().getResults(queryId);
-    	SimpleFeatureSource featureSource = (SimpleFeatureSource) results.getFeatureSource();
-    	
+        DataQueryFeatureSource results = getCache().getResults(queryId);  	
         PrintWriter writer = response.getWriter();
         try {
+            Query query = null;
+            try {
+                if (start!=null && limit!=null) {
+                    query = new Query();
+                    Integer startInt = Integer.parseInt(start);
+                    query.setStartIndex(startInt);
+                    Integer limitInt = Integer.parseInt(limit);
+                    if (limitInt>0) {
+                        query.setMaxFeatures(limitInt);
+                    }
+                } 
 
-            //cellFormat(results,writer);
-            rowFormat(results, writer);
-            
+
+            }catch (NumberFormatException ex) {}
+
+            rowFormat(results, query, writer);
+
         } finally {
             writer.close();
         }
     }
-             /*
-    private void cellFormat(DataQueryFeatureSource results, PrintWriter writer) {
-        results
-        
-    }          */
 
-    private void rowFormat(DataQueryFeatureSource results, PrintWriter writer) throws JSONException, IOException {
+    private void rowFormat(DataQueryFeatureSource results, Query query, PrintWriter writer) throws JSONException, IOException {
         SimpleFeatureSource featureSource = results.getFeatureSource();
         JSONObject ret = new JSONObject();
         JSONObject metaData = new JSONObject();
@@ -95,8 +104,16 @@ public class GetData extends AbstractQueryingController {
         ret.putOpt("metaData", metaData);
 
         JSONArray rows = new JSONArray();
-        boolean first = true;
-        for (SimpleFeatureIterator it = featureSource.getFeatures().features(); it.hasNext() ; ) {
+
+        SimpleFeatureIterator it;
+        if (query!=null) {
+            it = featureSource.getFeatures(query).features();
+        }
+        else {
+            it = featureSource.getFeatures().features();
+        }
+
+        while (it.hasNext()) {
 
             JSONObject feature = new JSONObject();
             SimpleFeature current = it.next();

@@ -4,7 +4,7 @@ import org.gradle.api.*;
 
 class Geotools {
     boolean transitive = true
-    String version = "2.7-SNAPSHOT"
+    String version = "11.0"
     List<String> modules = ["epsg-hsql", "shapefile", "render", "geojson","brewer"]
     List<String> otherDeps = []
     Map<String,String> repositories = ["ibiblio":"http://www.ibiblio.org/maven2", 

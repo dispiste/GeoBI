@@ -1,6 +1,8 @@
 package com.c2c.style;
 
 
+import static org.geotools.filter.capability.FunctionNameImpl.parameter;
+
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,9 +15,12 @@ import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.visitor.CalcResult;
 import org.geotools.feature.visitor.UniqueVisitor;
+import org.geotools.filter.capability.FunctionNameImpl;
 import org.geotools.filter.function.ClassificationFunction;
 import org.geotools.filter.function.ExplicitClassifier;
+import org.geotools.filter.function.RangedClassifier;
 import org.geotools.util.NullProgressListener;
+import org.opengis.filter.capability.FunctionName;
 
 
 /**
@@ -28,12 +33,17 @@ import org.geotools.util.NullProgressListener;
  * @source $URL: http://svn.osgeo.org/geotools/branches/2.7.x/modules/library/main/src/main/java/org/geotools/filter/function/UniqueIntervalFunction.java $
  */
 public class UniqueIntervalFunction extends ClassificationFunction {
+
+    public static FunctionName NAME = new FunctionNameImpl("UniqueInterval",
+            RangedClassifier.class,
+            parameter("value", Double.class),
+            parameter("classes", Integer.class));
     
     public UniqueIntervalFunction() {
-        setName("UniqueInterval");
+        super(NAME);
     }
 
-    private Object calculate(SimpleFeatureCollection featureCollection) {
+	private Object calculate(SimpleFeatureCollection featureCollection) {
         try {
             int classNum = getClasses();
         	//use a visitor to grab the unique values

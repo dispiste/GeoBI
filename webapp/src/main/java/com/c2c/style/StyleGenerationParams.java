@@ -11,15 +11,16 @@ import static org.geotools.styling.SLD.featureTypeStyle;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.geotools.data.simple.SimpleFeatureCollection;
+import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.visitor.AbstractCalcResult;
 import org.geotools.feature.visitor.CalcResult;
 import org.geotools.feature.visitor.FeatureCalc;
 import org.geotools.feature.visitor.MaxVisitor;
 import org.geotools.feature.visitor.MinVisitor;
-import org.geotools.filter.Expression;
 import org.geotools.filter.function.ClassificationFunction;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.EqualIntervalFunction;
@@ -41,6 +42,8 @@ import org.opengis.feature.Feature;
 import org.opengis.feature.type.GeometryDescriptor;
 import org.opengis.filter.FilterFactory;
 import org.opengis.filter.FilterFactory2;
+import org.opengis.filter.expression.Expression;
+import org.opengis.filter.expression.Literal;
 import org.opengis.filter.expression.PropertyName;
 
 import com.c2c.controller.GetOverlayIcon;
@@ -267,9 +270,13 @@ public class StyleGenerationParams {
 			};
 		}
 
-		classifierFn.setClasses(nbClasses == -1 ? results.size() : nbClasses);
-		classifierFn.setExpression((Expression) expression);
-		classifierFn.setName("choropleths");
+        // workaround bug https://jira.codehaus.org/browse/GEOT-4247
+        FilterFactory ff = CommonFactoryFinder.getFilterFactory(null);
+        Literal clExpr = ff.literal(nbClasses == -1 ? results.size() : nbClasses);
+        List<Expression> params = new ArrayList<Expression>(2);
+        params.add(expression);
+        params.add(clExpr);
+        classifierFn.setParameters(params);
 
 		Classifier classifier;
 		try {

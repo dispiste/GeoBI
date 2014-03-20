@@ -16,6 +16,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
@@ -99,7 +100,7 @@ public class GetBaseLayer extends AbstractQueryingController {
     		rs = prepStmt.executeQuery();
 
 
-    		FeatureCollection<SimpleFeatureType, SimpleFeature> collection = FeatureCollections.newCollection();
+    		DefaultFeatureCollection collection = new DefaultFeatureCollection();
 
     		while (rs.next())
     		{
