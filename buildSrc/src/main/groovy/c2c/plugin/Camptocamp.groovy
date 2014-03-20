@@ -38,14 +38,14 @@ class Camptocamp implements Plugin<Project> {
 
         project.tasks.addRule("Pattern: $JettyRunAllWar.TASK_NAME") { taskName -> 
             if (taskName == JettyRunAllWar.TASK_NAME) {
-                def allTasks = project.tasks
-                    allTasks.add(taskName, JettyRunAllWar.class)
+                def all = project.tasks
+                    all.add(taskName, JettyRunAllWar.class)
             }
         }
     }
 
     def configureWarPlugins(Project project, c2c.convention.Camptocamp convention) {
-         project.tasks.withType(org.gradle.api.tasks.bundling.War.class).allTasks { task ->
+         project.tasks.withType(org.gradle.api.tasks.bundling.War.class).all { task ->
              task.dependsOn project.tasks.getByName(FILTER_WEBAPP_TASKNAME)
              task.from convention.filterWebappOut
          }
