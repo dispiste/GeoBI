@@ -1,19 +1,16 @@
 package com.c2c.query;
 
-import org.geotools.data.FeatureSource;
-import org.geotools.data.FeatureStore;
-import org.geotools.data.memory.MemoryDataStore;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import org.geotools.data.DataUtilities;
+import org.geotools.data.collection.ListFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureCollection;
 import org.geotools.data.simple.SimpleFeatureSource;
-import org.geotools.data.simple.SimpleFeatureStore;
-import org.geotools.feature.FeatureCollection;
-import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.simple.SimpleFeatureBuilder;
 import org.geotools.feature.simple.SimpleFeatureTypeBuilder;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.simple.SimpleFeatureType;
-
-import java.io.IOException;
 
 /**
  * Takes the simplified {@link DataAttribute} and {@link DataAttributeDef} data
@@ -33,23 +30,16 @@ public class FeatureSourceBuilder {
      */
     public SimpleFeatureSource createFeatureStore(
             final DataQueryResults parser) throws IOException {
-        SimpleFeatureStore featureSource = createFeatureStore(parser
-                .getFeatureTypeSpec(), parser.defaultGeom());
-
-        // TODO A new FeatureCollection should not be created there should
-        // be a wrapper class that returns features as they are asked for
-        // That will increase performance and reduce memory
-
-        SimpleFeatureCollection coll = FeatureCollections
-                .newCollection();
+      
+        SimpleFeatureType type = createFeatureType(parser.getFeatureTypeSpec(), parser.defaultGeom());
+        ArrayList<SimpleFeature> list = new ArrayList<SimpleFeature>();
         int i = 1;
         for (Iterable<DataAttribute> spec : parser) {
-            coll.add(toFeature(i, featureSource.getSchema(), spec));
+            list.add( toFeature(i, type, spec) );
             i++;
         }
-        featureSource.addFeatures(coll);
-
-        return featureSource;
+        SimpleFeatureCollection collection = new ListFeatureCollection(type,list);
+        return DataUtilities.source( collection );
     }
 
     private SimpleFeature toFeature(int i, SimpleFeatureType simpleFeatureType,
@@ -61,8 +51,8 @@ public class FeatureSourceBuilder {
         }
         return builder.buildFeature("result-" + i);
     }
-
-    private SimpleFeatureStore createFeatureStore(Iterable<DataAttributeDef> featureTypeSpec, String defaultGeom) throws IOException {
+    
+    private SimpleFeatureType createFeatureType(Iterable<DataAttributeDef> featureTypeSpec, String defaultGeom) throws IOException {
         SimpleFeatureTypeBuilder ftBuilder = new SimpleFeatureTypeBuilder();
         String ftName = "results";
         ftBuilder.setName(ftName);
@@ -71,11 +61,7 @@ public class FeatureSourceBuilder {
         }
 
         ftBuilder.setDefaultGeometry(defaultGeom);
-
-        MemoryDataStore ds = new MemoryDataStore(ftBuilder.buildFeatureType());
-
-        return (SimpleFeatureStore) ds
-                .getFeatureSource(ftName);
+        return ftBuilder.buildFeatureType();
     }
 
 }

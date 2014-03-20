@@ -16,6 +16,7 @@ import org.geotools.data.simple.SimpleFeatureSource;
 import org.geotools.factory.CommonFactoryFinder;
 import org.geotools.factory.GeoTools;
 import org.geotools.feature.AttributeTypeBuilder;
+import org.geotools.feature.DefaultFeatureCollection;
 import org.geotools.feature.FeatureCollection;
 import org.geotools.feature.FeatureCollections;
 import org.geotools.feature.FeatureIterator;
@@ -143,7 +144,7 @@ public class GetInfo extends AbstractQueryingController {
         Query datastoreQuery = makeDatastoreQuery(bbox, results, finalMaxFeatures, attrs, crs, targetCrs);
 
         FeatureCollection<SimpleFeatureType, SimpleFeature> results2 = results.getFeatures(datastoreQuery);
-        FeatureCollection<SimpleFeatureType, SimpleFeature> results3 = FeatureCollections.newCollection();
+        DefaultFeatureCollection results3 = new DefaultFeatureCollection();
 
         FeatureIterator<SimpleFeature> it = results2.features();
 
