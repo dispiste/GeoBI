@@ -81,6 +81,7 @@ layouts:
         - !text
           text: '${comment}'
           spacingAfter: 300
+          condition: includeMap
         - !image
           align: center
           url: '${urlChart}'
@@ -150,6 +151,7 @@ layouts:
         - !text
           text: '${comment}'
           spacingAfter: 600
+          condition: includeMap
         - !image
           align: center
           condition: includeChart
