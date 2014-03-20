@@ -26,6 +26,10 @@ App.table = function() {
     var setDisabled = function(d) {
         disabled = d;
     }
+    
+    var isDisabled = function() {
+        return disabled;
+    }
 
     var createGrid = function() {
 
@@ -232,6 +236,7 @@ App.table = function() {
     return { 
         panel: container,
         isRelativeOnly: isRelativeOnly,
-        setDisabled: setDisabled
+        setDisabled: setDisabled,
+        isDisabled: isDisabled
     };
 }();

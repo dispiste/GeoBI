@@ -6,7 +6,11 @@ App.map = function() {
     var setDisabled = function(d) {
         disabled = d;
     }
-
+    
+    var isDisabled = function() {
+        return disabled;
+    }
+    
     var mapStyler = App.mapStyler;
 
     var styleBtn = new Ext.Button({
@@ -462,6 +466,7 @@ App.map = function() {
         },
         panel: container,
         mapPanel: mapPanel,
-        setDisabled: setDisabled
+        setDisabled: setDisabled,
+        isDisabled: isDisabled
     };
 }();

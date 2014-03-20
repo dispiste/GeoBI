@@ -46,6 +46,9 @@ App.report = function() {
             });
 
             Ext.apply(printPage.customParams, {
+                includeMap: (!App.map.isDisabled()).toString(),
+                includeTable: (!App.table.isDisabled()).toString(),
+                includeChart: (!App.chart.isDisabled()).toString(),
                 urlLegend: legendUrl,
                 urlChart: chartUrl,
                 groupHeaders: groupHeaders,

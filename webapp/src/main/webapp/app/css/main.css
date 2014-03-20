@@ -9,6 +9,16 @@ html body {
     margin-top: 10px;
 }
 
+.centered-text {
+	text-align: center;
+}
+
+.indented-block {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
 #query-footer-logo {
     text-align: center;
     margin-top: 10px;
@@ -178,4 +188,9 @@ html body {
     color: #555;
     font-style: italic;
     border-top: 1px solid #ddd;
+}
+
+span.app-text {
+	font-size: 11px;
+	font-family: sans-serif;
 }

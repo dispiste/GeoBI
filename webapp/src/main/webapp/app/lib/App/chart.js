@@ -7,6 +7,10 @@ App.chart = function() {
         disabled = d;
     }
     
+    var isDisabled = function() {
+        return disabled;
+    }
+    
     var onItemCheck = function(item) {
         type = item.charttype;
         updateChart();
@@ -185,6 +189,7 @@ App.chart = function() {
         },
         panel: container,
         getChartUrl: getChartUrl,
-        setDisabled: setDisabled
+        setDisabled: setDisabled,
+        isDisabled: isDisabled
     };
 }();

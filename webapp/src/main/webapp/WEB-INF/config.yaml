@@ -64,6 +64,7 @@ layouts:
           absoluteY: 525
           width: 250
           backgroundColor: #FFFFFF
+          condition: includeMap
           items:
             - !image
               align: center
@@ -76,15 +77,18 @@ layouts:
           align: left
           absoluteX: 30
           absoluteY: 500
+          condition: includeMap
         - !text
           text: '${comment}'
           spacingAfter: 300
         - !image
           align: center
           url: '${urlChart}'
+          condition: includeChart
           maxWidth: 700
         - !pivottable
           borderWidth: 1
+          condition: includeTable
           tableConfig: &config
             borderWidth: 1
             cells:
@@ -129,6 +133,7 @@ layouts:
           absoluteY: 760
           width: 250
           backgroundColor: #FFFFFF
+          condition: includeMap
           items:
             - !image
               align: center
@@ -141,15 +146,18 @@ layouts:
           align: left
           absoluteX: 30
           absoluteY: 750
+          condition: includeMap
         - !text
           text: '${comment}'
           spacingAfter: 600
         - !image
           align: center
+          condition: includeChart
           url: '${urlChart}'
           maxWidth: 700
         - !pivottable
           borderWidth: 1
+          condition: includeTable
           tableConfig: &config
             borderWidth: 1
             cells:
