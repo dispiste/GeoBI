@@ -321,6 +321,12 @@ App.map = function() {
             )
         ]
     });
+    
+    scalebar = new OpenLayers.Control.ScaleBar({
+        abbreviateLabel: true,
+        singleLine: true
+    });
+    mapPanel.map.addControl(scalebar);
 
     var legend = new Ext.Panel({
         region: 'east',

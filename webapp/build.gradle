@@ -12,7 +12,6 @@ apply plugin: Spring
 apply plugin: 'project-report'
 
 extraLibs = "$projectDir/libs"
-System.properties['jsdebug'] = "true"
 
 
 def downloadDeps() {
@@ -92,8 +91,7 @@ tasks.addRule("Pattern: build<server>") { String taskName ->
   }
 }
 
-def deploydir = "D:/workspaces/webbi/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/"
-// deploydir = "C:/Archivos de programa/Apache Software Foundation/Tomcat 6.0/webapps/"
+deploydir = "C:/Archivos de programa/Apache Software Foundation/Tomcat 6.0/webapps/"
 
 task(deploy, dependsOn: war) << {
   ant.copy(file: war.archivePath, todir: deploydir)
@@ -162,6 +160,16 @@ task (svnExportExternals) << {
         args = ['export',
              'http://svn.openlayers.org/trunk/openlayers@10808',
              'src/main/webapp/lib/externals/openlayers']
+    }
+  }
+  
+  
+  if (! new File("webapp/src/main/webapp/lib/externals/scalebar").exists()) {
+    exec {
+      executable = 'svn'
+        args = ['export',
+             'http://svn.openlayers.org/addins/scalebar/trunk/@12468',
+             'src/main/webapp/lib/externals/scalebar']
     }
   }
 }
@@ -252,7 +260,9 @@ task(combineGeoExtJs, dependsOn:copyJsResources) << {
 task(combineAppJs, dependsOn:copyJsResources) << {
     def encoding = 'utf-8'
 
-    def inputFiles = ['lib/externals/ext/examples/ux/Spinner.js',
+    def inputFiles = [
+      'lib/externals/scalebar/lib/OpenLayers/Control/ScaleBar.js',
+      'lib/externals/ext/examples/ux/Spinner.js',
       'lib/externals/ext/examples/ux/SpinnerField.js',
       'app/lib/App/cubeProperties.js',
       'app/lib/App/messageMgr.js',

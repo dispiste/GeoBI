@@ -78,6 +78,32 @@ layouts:
           absoluteX: 30
           absoluteY: 500
           condition: includeMap
+        - !columns
+          absoluteX: 400
+          absoluteY: 120
+          width: 200
+          condition: includeMap
+          items:
+            - !scalebar
+              maxSize: 150
+              type: bar
+              intervals: 4
+              subIntervals: false
+              units: m
+              barSize: 4
+              lineWidth: 1
+              barDirection: up
+              textDirection: up
+              labelDistance: 3
+              font: Helvetica
+              fontSize: 12
+              fontColor: black
+              color: #000000
+              spacingAfter: 0
+              align: left
+              vertAlign: middle
+              backgroundColor: #FFFFFF
+              lockUnits: false
         - !text
           text: '${comment}'
           spacingAfter: 300
@@ -87,6 +113,7 @@ layouts:
           url: '${urlChart}'
           condition: includeChart
           maxWidth: 700
+          spacingAfter: 10
         - !pivottable
           borderWidth: 1
           condition: includeTable
@@ -148,6 +175,32 @@ layouts:
           absoluteX: 30
           absoluteY: 750
           condition: includeMap
+        - !columns
+          absoluteX: 680
+          absoluteY: 270
+          width: 200
+          condition: includeMap
+          items:
+            - !scalebar
+              maxSize: 150
+              type: bar
+              intervals: 4
+              subIntervals: false
+              units: m
+              barSize: 4
+              lineWidth: 1
+              barDirection: up
+              textDirection: up
+              labelDistance: 3
+              font: Helvetica
+              fontSize: 12
+              fontColor: black
+              color: #000000
+              spacingAfter: 0
+              align: left
+              vertAlign: middle
+              backgroundColor: #FFFFFF
+              lockUnits: false
         - !text
           text: '${comment}'
           spacingAfter: 600
@@ -157,6 +210,7 @@ layouts:
           condition: includeChart
           url: '${urlChart}'
           maxWidth: 700
+          spacingAfter: 10
         - !pivottable
           borderWidth: 1
           condition: includeTable
