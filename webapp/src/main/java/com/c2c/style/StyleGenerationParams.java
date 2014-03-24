@@ -24,6 +24,7 @@ import org.geotools.feature.visitor.MinVisitor;
 import org.geotools.filter.function.ClassificationFunction;
 import org.geotools.filter.function.Classifier;
 import org.geotools.filter.function.EqualIntervalFunction;
+import org.geotools.filter.function.JenksNaturalBreaksFunction;
 import org.geotools.filter.function.QuantileFunction;
 import org.geotools.filter.function.StandardDeviationFunction;
 import org.geotools.styling.ExternalGraphic;
@@ -261,7 +262,14 @@ public class StyleGenerationParams {
 					return -1;
 				}
 			};
-		} else {
+        } else if ("Jenks".equalsIgnoreCase(classificationMethod)) {
+            classifierFn = new JenksNaturalBreaksFunction() {
+                @Override
+                protected int decimalPlaces(double slotWidth) {
+                    return -1;
+                }
+            };
+        } else {
 			classifierFn = new StandardDeviationFunction(){
 				@Override
 				protected int decimalPlaces(double slotWidth) {

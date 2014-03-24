@@ -67,9 +67,13 @@ App.mapStyler = function() {
         [[
             'EqualInterval', 'Equal Interval'
         ], [
-            'UniqueInterval', 'Unique Values'
+            'Jenks', 'Natural Breaks (Jenks)'
         ], [
             'Quantile', 'Quantile'
+        ], [
+            'StandardDeviation', 'Standard Deviation'
+        ], [
+            'UniqueInterval', 'Unique Values'
         ]]
     );
 
