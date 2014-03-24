@@ -23,9 +23,15 @@ App.chart = function() {
         iconCls: 'style',
         menu: {
             items: [{
+                text: 'Default',
+                charttype: 'default',
+                checked: true,
+                group: 'chart-type',
+                checkHandler: onItemCheck
+            }, {
                 text: 'Pie by row',
                 charttype: 'piebyrow',
-                checked: true,
+                checked: false,
                 group: 'chart-type',
                 checkHandler: onItemCheck
             }, {
@@ -67,7 +73,7 @@ App.chart = function() {
         }
     });
     
-    var type = "piebyrow";
+    var type = "default";
 
     var container = new Ext.Container({
         collapsible: true,
@@ -154,7 +160,7 @@ App.chart = function() {
             indicators: indicatorsStore.collect('data_index').join(','),
             width: size.width - 2,
             height: size.height - 2,
-            type: type
+            type: getChartType()
         };
         return 'getchart?' + Ext.urlEncode(params);
     };
@@ -164,6 +170,19 @@ App.chart = function() {
             indicatorsStore.loadData(App.metadata);
             updateChart();
         }
+    };
+    
+    var getChartType = function() {
+        if (type==="default") {
+            var numVars = indicatorsStore.collect('data_index').length;
+            if (numVars>1) {
+                return "piebyrow";
+            }
+            else {
+                return "horizontalbar";
+            }
+        }
+        return type;
     };
 
     App.queryMgr.events.on({
