@@ -130,7 +130,7 @@ task (svnExportExternals) << {
     exec {
       executable = 'svn'
         args = ['export',
-             'http://svn.geoext.org/ext/3.2.1@2626',
+             'http://svn.geoext.org/ext/3.4.1@2911',
              'src/main/webapp/lib/externals/ext']
     }
   }
@@ -139,7 +139,7 @@ task (svnExportExternals) << {
     exec {
       executable = 'svn'
         args = ['export',
-             'http://svn.geoext.org/core/trunk/geoext@2428',
+             'http://svn.geoext.org/core/trunk/geoext@2911',
              'src/main/webapp/lib/externals/geoext']
     }
   }
@@ -149,7 +149,7 @@ task (svnExportExternals) << {
     exec {
       executable = 'svn'
         args = ['export',
-             'http://svn.openlayers.org/addins/loadingPanel/trunk@10808',
+             'http://svn.openlayers.org/addins/loadingPanel/trunk@12468',
              'src/main/webapp/lib/externals/loadingpanel']
     }
   }
@@ -158,7 +158,7 @@ task (svnExportExternals) << {
     exec {
       executable = 'svn'
         args = ['export',
-             'http://svn.openlayers.org/trunk/openlayers@10808',
+             'http://svn.openlayers.org/trunk/openlayers@12468',
              'src/main/webapp/lib/externals/openlayers']
     }
   }
@@ -186,21 +186,10 @@ copyJsResources.dependsOn svnExportExternals
 
 def lookupJsFiles(file, encoding) {
   String text = file.getText(encoding)
-  def pattern = ~/var jsfiles = new Array\(((\s*"[^"),]*?",?\s*)+)\)/
+  def pattern = ~/(var jsfiles = new Array\(|jsFiles = \[)((\s*"[^"),]*?",?\s*)+)(\)|\])/
   def matcher = pattern.matcher(text)
   matcher.find()
-  def filesNames = matcher.group(1).trim().split(",").collect{it.trim()}.collect{f -> f.substring(1,f.length() - 1)}
-  def files = [file]
-  files.addAll(filesNames.collect{new File(file.parentFile, it)})
-  return files
-}
-
-def lookupJsFilesOL211(file, encoding) {
-  String text = file.getText(encoding)
-  def pattern = ~/jsFiles = \[((\s*"[^"),]*?",?\s*)+)\]/
-  def matcher = pattern.matcher(text)
-  matcher.find()
-  def filesNames = matcher.group(1).trim().split(",").collect{it.trim()}.collect{f -> f.substring(1,f.length() - 1)}
+  def filesNames = matcher.group(2).trim().split(",").collect{it.trim()}.collect{f -> f.substring(1,f.length() - 1)}
   def files = [file]
   files.addAll(filesNames.collect{new File(file.parentFile, it)})
   return files

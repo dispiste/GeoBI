@@ -389,8 +389,7 @@ App.mapStyler = function() {
         field.on('change', _registerStyle);
         field.on('select', _registerStyle);
         if (field instanceof Ext.form.CompositeField) {
-            Ext.each(field.items, function(subfield, i){
-                var subfield = field.items[i] = Ext.create(subfield);
+            Ext.each(field.items.items, function(subfield, i){
                 subfield.on('spin', _registerStyle);
                 subfield.on('change', _registerStyle);
                 subfield.on('select', _registerStyle);
