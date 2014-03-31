@@ -42,7 +42,7 @@ window.onload = function() {
             anchor: '0',
             items: [{
                 xtype: 'container',
-                html: '<div><span class="app-text">(C) UAB and CampToCamp. Source code available on <a href="https://github.com/dispiste/GeoBI">GitHub</a>.</span></div>'
+                html: '<div><span class="app-text">(C) UAB and CampToCamp. Source code available on <a href="https://github.com/dispiste/GeoBI" target="_blank">GitHub</a>.</span></div>'
             }]
         };
     
@@ -63,7 +63,6 @@ window.onload = function() {
                     {
                         xtype: 'container',
                         anchor: '0',
-                        autoScroll: true,
                         layout: 'column',
                         items: [{
                             xtype: 'container',
