@@ -6,3 +6,5 @@ db-name=geodw
 cube-definition=geofoodmart.xml
 simple-cube-definition=geofoodmart.xml
 cube-name=Sales
+cube-title=GeofoodMart Sales
+cube-desc=A sample cube

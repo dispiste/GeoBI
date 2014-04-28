@@ -6,3 +6,5 @@ db-name=geodw2v2
 cube-definition=cube-definition2.xml
 simple-cube-definition=simple-cube-definition2.xml
 cube-name=CLC90_00_06
+cube-title=Espon1
+cube-desc=Espon cube

@@ -15,9 +15,18 @@
 
     <script type="text/javascript">
         Ext.namespace('App');
-
+        
+        function getCubeName() {
+            var parts = window.location.search.substring(1).split("=");
+            if (parts.length==2) {
+                return parts[1];
+            } 
+            else {
+                return '@cube-name@';
+            }
+        }
         App.cube = {
-           name: '@cube-name@'
+           name: getCubeName()
         };
     </script> 
 

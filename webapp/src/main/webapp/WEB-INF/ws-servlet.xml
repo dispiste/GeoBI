@@ -77,12 +77,44 @@
         <property name="queryFactory" ref="query-factory"/>
         <property name="cache" ref="cache"/>
     </bean>
+    
+    <bean id="getcubes-controller" class="com.c2c.controller.ListCubes">
+        <property name="queryFactory" ref="query-factory"/>
+        <property name="cache" ref="cache"/>
+    </bean>
 
     <bean id="query-factory" class="com.c2c.query.QueryFactory">
-        <constructor-arg value="jdbc:mondrian:Jdbc=jdbc:postgresql_postGIS://${db-server}:${db-port}/${db-name}?user=${db-user}&amp;password=${db-pass}"/>
-        <constructor-arg value="${cube-definition}"/>
-        <constructor-arg value="${simple-cube-definition}"/>
+        <constructor-arg ref="cube-factory" />
     </bean>
+    
+    <bean id="cube-factory" class="com.c2c.cube.CubeFactory">
+        <constructor-arg>
+            <map>
+                <entry key="${cube-name}">
+                    <bean class="com.c2c.cube.CubeInfo">
+                        <property name="title" value ="${cube-title}"/>
+                        <property name="description" value ="${cube-desc}"/>
+                        <property name="defFile" value="${cube-definition}" />
+                        <property name="simpleDefFile" value="${simple-cube-definition}" />
+                        <property name="jdbcConnection" value="jdbc:mondrian:Jdbc=jdbc:postgresql_postGIS://${db-server}:${db-port}/${db-name}?user=${db-user}&amp;password=${db-pass}" />
+                    </bean>
+                </entry>
+                <!--
+                Additional cubes can be set up here:
+                <entry key="cube2">
+                    <bean class="com.c2c.cube.CubeInfo">
+                        <property name="title" value="Cube 2 title"/>
+                        <property name="description" value ="Cube 2 desc"/>
+                        <property name="defFile" value="cube2-def.xml"/>
+                        <property name="simpleDefFile" value="cube2-simpledef.xml"/>
+                        <property name="jdbcConnection" value="jdbc:mondrian:Jdbc=jdbc:postgresql_postGIS://${db-server}:${db-port}/${db-name}?user=${db-user}&amp;password=${db-pass}" />
+                    </bean>
+                </entry>
+                --> 
+            </map>
+        </constructor-arg>
+    </bean>
+
 
     <!-- Substitutes any ${...} variables in this (and loaded) spring configuration file
           with values from the properties file -->

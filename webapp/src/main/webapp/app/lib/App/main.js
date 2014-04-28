@@ -91,3 +91,13 @@ window.onload = function() {
         }
     });
 };
+
+function getServlet() {
+    var parts = window.location.pathname.split("/");
+    for (var i=0; i<parts.length; i++) {
+        if (parts[i]!="") {
+            return parts[i];
+        }
+    }
+    return "/";
+}

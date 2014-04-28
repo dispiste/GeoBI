@@ -6,14 +6,35 @@
 
     <link rel="stylesheet" type="text/css" href="lib/externals/ext/resources/css/ext-all.css" />
     <link rel="stylesheet" type="text/css" href="lib/externals/ext/resources/css/xtheme-gray.css" />
+    <link rel="stylesheet" type="text/css" href="lib/externals/ext/examples/ux/css/Spinner.css" />
 
     <link rel="stylesheet" type="text/css" href="app/css/main.css" />
     <script type="text/javascript" src="lib/minified/extjs-all.js"></script>
     <script type="text/javascript" src="lib/minified/OpenLayers.js"></script>
     <script type="text/javascript" src="lib/minified/GeoExt.js"></script>
-    <script type="text/javascript" src="lib/minified/cube-chooser-min.js"></script>
+
+    <script type="text/javascript">
+        Ext.namespace('App');
+        
+        function getCubeName() {
+            var parts = window.location.search.substring(1).split("=");
+            if (parts.length==2) {
+                return parts[1];
+            } 
+            else {
+                return 'pg_CLC_90_00';
+            }
+        }
+        App.cube = {
+           name: getCubeName()
+        };
+    </script> 
+
+
+    
+    <script type="text/javascript" src="lib/minified/app-all.js"></script>
 
 </head>
-<body class="cubeSelectorBackground">
+<body>
 </body>
 </html>

@@ -124,6 +124,9 @@ def minifiedGeoExt = new File(minifiedJsOut, 'GeoExt.js')
 def combinedGeoExt = new File(combinedOut,"geoext-combined.js")
 def minifiedApp = new File(minifiedJsOut, 'app-all.js')
 def combinedApp = new File(combinedOut,"app-combined.js")
+def minifiedCubeChooser = new File(minifiedJsOut,"cube-chooser-min.js")
+def combinedCubeChooser = new File(combinedOut,"cube-chooser-combined.js")
+
 
 task (svnExportExternals) << {
   if (! new File("webapp/src/main/webapp/lib/externals/ext").exists()) {
@@ -291,6 +294,24 @@ task(combineAppJs, dependsOn:copyJsResources) << {
     }
 }
 
+task(combineCubeChooserJs, dependsOn:copyJsResources) << {
+    def encoding = 'utf-8'
+
+    def inputFiles = [
+        'lib/externals/ext/examples/ux/CenterLayout.js',
+        'app/lib/App/cubeChooser.js'
+    ]
+    inputFiles = inputFiles.collect {f -> new File(webAppDir, f)}
+
+    combinedCubeChooser.parentFile.mkdirs()
+    if (combinedCubeChooser.exists()) {
+      combinedCubeChooser.delete()
+    }
+    combinedCubeChooser.withWriter (encoding){writer ->
+      inputFiles.each {write(writer,it,encoding)}
+    }      
+}
+
 task(extMinify,type:JavaExec, dependsOn:combineExtJs) {
     classpath = configurations.jsMinify
     main = 'com.yahoo.platform.yui.compressor.YUICompressor'
@@ -311,7 +332,12 @@ task(appMinify,type:JavaExec, dependsOn:combineAppJs) {
     main = 'com.yahoo.platform.yui.compressor.YUICompressor'
     args = [combinedApp.path, '--type','js','--charset','utf-8','-o',minifiedApp.path]
 }
-task(copyNonMinifiedJS,dependsOn:[combineExtJs,combineOpenLayersJs,combineGeoExtJs,combineAppJs]) << {
+task(cubeChooserMinify,type:JavaExec, dependsOn:combineCubeChooserJs) {
+    classpath = configurations.jsMinify
+    main = 'com.yahoo.platform.yui.compressor.YUICompressor'
+    args = [combinedCubeChooser.path, '--type','js','--charset','utf-8','-o',minifiedCubeChooser.path]
+}
+task(copyNonMinifiedJS,dependsOn:[combineExtJs,combineOpenLayersJs,combineGeoExtJs,combineAppJs, combineCubeChooserJs]) << {
    if (minifiedExt.exists()) {
       minifiedExt.delete()
    }
@@ -328,6 +354,10 @@ task(copyNonMinifiedJS,dependsOn:[combineExtJs,combineOpenLayersJs,combineGeoExt
       minifiedApp.delete()
    }
    minifiedApp << combinedApp.asWritable()
+   if (minifiedCubeChooser.exists()) {
+      minifiedCubeChooser.delete()
+   }
+   minifiedCubeChooser << combinedCubeChooser.asWritable()
 }
 
 task(jsMinify) {
@@ -336,7 +366,7 @@ task(jsMinify) {
     dependsOn  copyNonMinifiedJS
   } else {
     logger.info("minifying js files")
-    [extMinify,geoExtMinify,olMinify,appMinify].each {dependsOn it}
+    [extMinify,geoExtMinify,olMinify,appMinify,cubeChooserMinify].each {dependsOn it}
   }
   
 }
@@ -345,6 +375,7 @@ task(jsMinify) {
 task(jsdeploy, dependsOn: jsMinify) << {
   jsdeploydir = deploydir + "/" + contextName + "/lib/minified"
   ant.copy(file: minifiedApp, todir: jsdeploydir)
+  ant.copy(file: minifiedCubeChooser, todir: jsdeploydir)
   ant.copy(file: minifiedGeoExt, todir: jsdeploydir)
   ant.copy(file: minifiedOL, todir: jsdeploydir)
   ant.copy(file: combinedExt, todir: jsdeploydir)

@@ -258,3 +258,7 @@ span.app-text {
     font-size: 0.7em;
     font-variant: small-caps;
 }
+
+.cubeSelectorBackground {
+    background-color: #ACC1D5;
+}
