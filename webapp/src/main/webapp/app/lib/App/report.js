@@ -18,11 +18,11 @@ App.report = function() {
             printButton.setIconClass('loading');
             var hostPort = "http://" + window.location.hostname +
                            (window.location.port === "" ? "" : ':' + window.location.port);
-            var legendUrl = hostPort + window.location.pathname + 'getlegend'+
+            var legendUrl = hostPort + App.getServlet() + '/getlegend'+
                 '?QUERYID='+App.queryId+
                 '&STYLEID='+App.styleId+
                 '&FORMAT_OPTIONS=dpi:254';
-            var chartUrl = hostPort + window.location.pathname + App.chart.getChartUrl();
+            var chartUrl = hostPort + App.getServlet() + "/"+ App.chart.getChartUrl();
 
             // table
             var relativeOnly = App.table.isRelativeOnly();
