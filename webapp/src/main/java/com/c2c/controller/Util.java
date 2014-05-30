@@ -1,29 +1,14 @@
 package com.c2c.controller;
 
 import java.awt.Color;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.measure.quantity.Length;
-import javax.measure.unit.Unit;
-import javax.xml.transform.TransformerException;
-
-import org.geotools.data.simple.SimpleFeatureSource;
-import org.geotools.styling.FeatureTypeStyle;
-import org.geotools.styling.Rule;
-import org.geotools.styling.SLDTransformer;
 import org.geotools.styling.Stroke;
 import org.geotools.styling.Style;
 import org.geotools.styling.StyleBuilder;
 import org.geotools.styling.Symbolizer;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import com.c2c.data.DataQueryDimension;
 import com.c2c.data.DataQueryFeatureSource;
@@ -159,5 +144,18 @@ public final class Util {
     		dims += c.getUniqueName().replace("[", "").replace("]", "");
     	}
     	return dims;
+    }
+    
+    /**
+     * Calculates the scale denominator from a world distance, a map distance in pixels and
+     * the DPIs of the map.
+     * @param worldDistance World distance in meters
+     * @param mapPixels
+     * @param mapDPI
+     * @return
+     */
+    public static int getScale(double worldDistance, double mapPixels, double mapDPI) {
+        // 1 inch = 0.0254 metres
+        return (int) (worldDistance / ((0.0254*mapPixels)/mapDPI));
     }
 }

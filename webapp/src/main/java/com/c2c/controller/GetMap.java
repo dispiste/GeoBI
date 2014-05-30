@@ -70,7 +70,8 @@ public class GetMap extends AbstractQueryingController {
         ReferencedEnvelope bounds = ReferenceEnvelopeFactory.toReferencedEnvelope(bbox,
                 srs == null ? "EPSG:4326" : srs);
         Rectangle imageSize = new Rectangle(width, height);
-        Style sld = getCache().getStyle(styleId).getGtStyle(results.getFeatures());
+        Integer scale = Util.getScale(bounds.getWidth(), width, dpi);
+        Style sld = getCache().getStyle(styleId).getGtStyle(results.getFeatures(), scale);
 
         //if(results.getSchema().getGeometryDescriptor() == null)
         renderMap(response, results, bounds, imageSize, sld,
