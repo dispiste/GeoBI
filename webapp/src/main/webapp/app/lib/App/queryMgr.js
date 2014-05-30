@@ -528,6 +528,38 @@ App.queryMgr = function(options) {
         executeQuery();
     };
 
+    var getNumCols = function(query) {
+        if (query.cols){
+            var columns = 1;
+            for (var i=0; i<query.cols.length; i++) {
+                if (query.cols[i].members) {
+                    columns = columns*query.cols[i].members.length;
+                }
+                else {
+                    columns = columns*App.cubeProperties
+                        .getMembersCountByLevel(query.cols[i].level);
+                }
+            }
+            return columns;
+        }
+    }
+    
+    var getNumRows = function(query) {
+        if (query.rows) {
+            var rows = 1;
+            for (var i=0; i<query.rows.length; i++) {
+                if (query.rows[i].members) {
+                    rows = rows*query.rows[i].members.length;
+                }
+                else {
+                    rows = rows*App.cubeProperties
+                        .getMembersCountByLevel(query.rows[i].level);
+                }
+            }
+            return rows;
+        }
+    }
+    
     return {
         init: function() {
         	addExecutionRule(new App.LimitQuerySizeRule());
@@ -550,6 +582,8 @@ App.queryMgr = function(options) {
         getMeasures: getMeasures,
         drillDown: drillDown,
         rollUp: rollUp,
-        addExecutionRule: addExecutionRule
+        addExecutionRule: addExecutionRule,
+        getNumCols: getNumCols,
+        getNumRows: getNumRows
     };
 }();

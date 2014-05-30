@@ -137,7 +137,6 @@ App.chart = function() {
      * getChartUrl
      */
     var getChartUrl = function() {
-        var size = container.chartImg.body.getSize();
         if (App.queryMgr.getQuery().relative) {
             indicatorsStore.filterBy(function(record, id) {
                 if (record.get('name').indexOf('Total') != -1) {
@@ -155,12 +154,16 @@ App.chart = function() {
             });
             relativeAbsoluteBtn.setDisabled(false);
         }
+        var chartType = getChartType();
+        var componentSize = container.chartImg.body.getSize();
+        var size = getChartSize(chartType, componentSize);
+        container.resizableCmp.setSize(size.width, size.height);
         var params = {
             queryId: App.queryId,
             indicators: indicatorsStore.collect('data_index').join(','),
             width: size.width - 2,
             height: size.height - 2,
-            type: getChartType()
+            type: chartType
         };
         return 'getchart?' + Ext.urlEncode(params);
     };
@@ -174,16 +177,67 @@ App.chart = function() {
     
     var getChartType = function() {
         if (type==="default") {
-            var numVars = indicatorsStore.collect('data_index').length;
-            if (numVars>1) {
-                return "piebyrow";
+            query = App.queryMgr.getQuery();
+            // only use pie if measures==1 && themDims==1 && cols<6 && all thematic members are selected
+            // otherwise if does not really make sense
+            if (query && query.measure && query.cols && query.rows) {
+                var measures = query.measure.members.length;
+                var thematicDims = query.cols.length;
+                if (measures==1 && thematicDims==1) {
+                    var columns = App.queryMgr.getNumCols(query);
+                    if ( columns<6) {
+                        if (query.cols[0].members) {
+                            var thematicMembers = App.cubeProperties.getMembersCountByLevel(query.cols[0].level);
+                            var selectedThematicMembers = query.cols[0].members.length;
+                            if (thematicMembers==selectedThematicMembers) {
+                                return "piebyrow";
+                            }
+                        }
+                        else {
+                            return "piebyrow";
+                        }
+                    }
+                }
             }
-            else {
-                return "horizontalbar";
-            }
+            return "horizontalbar";
         }
         return type;
     };
+    
+    var getChartSize = function(chartType, currentSize) {
+        var query = App.queryMgr.getQuery();
+        var height, width;
+        if (chartType=="horizontalbar") {
+            var rows = App.queryMgr.getNumRows(query);
+            var columns = App.queryMgr.getNumCols(query);
+            var measures =  query.measure.members.length;
+            height = rows*columns*measures*10;
+            // width: same as component
+            width = currentSize.width;
+        }
+        else if (chartType=="piebyrow") {
+            var rows = App.queryMgr.getNumRows(query);
+            height = Math.ceil(rows/5)*140;
+            // width: same as component
+            width = currentSize.width;
+        }
+        else if (chartType=="pie") {
+            var columns = App.queryMgr.getNumCols(query);
+            height = Math.ceil(columns/5)*140;
+            // width: same as component
+            width: currentSize.width;
+        }
+        else if (chartType=="bar") {
+            // same as component
+            height = currentSize.height;
+            width = currentSize.width;
+        }
+        if (height==0) { // workaround a corner case where the query has not been loaded yet
+            console.log("getChartSize: query was not ready yet");
+            height = currentSize.height;
+        }
+        return {height: height, width: width};
+    }
 
     App.queryMgr.events.on({
         'metadataloaded': loadIndicators,

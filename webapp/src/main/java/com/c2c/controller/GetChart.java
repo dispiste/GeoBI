@@ -19,32 +19,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.geotools.data.simple.SimpleFeatureIterator;
 import org.geotools.data.simple.SimpleFeatureSource;
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartRenderingInfo;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.Axis;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.entity.StandardEntityCollection;
 import org.jfree.chart.imagemap.StandardToolTipTagFragmentGenerator;
 import org.jfree.chart.imagemap.StandardURLTagFragmentGenerator;
-import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
 import org.jfree.chart.labels.StandardCategoryToolTipGenerator;
-import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.labels.StandardPieToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.MultiplePiePlot;
 import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.chart.renderer.category.CategoryItemRenderer;
 import org.jfree.chart.renderer.category.StandardBarPainter;
-import org.jfree.chart.title.TextTitle;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.general.DatasetUtilities;
 import org.jfree.util.TableOrder;
+import org.jfreeclone.chart.ChartFactory;
+import org.jfreeclone.chart.plot.MultiplePiePlot;
 import org.opengis.feature.simple.SimpleFeature;
 import org.opengis.feature.type.AttributeDescriptor;
 import org.springframework.stereotype.Controller;
@@ -226,63 +222,74 @@ public class GetChart  extends AbstractQueryingController {
     protected JFreeChart createPieChart(HttpServletRequest request, HttpServletResponse response, 
     								String queryId, CategoryDataset newSet, int width, int height, String format) throws Exception 
     {
-        
         final JFreeChart multiChart = ChartFactory.createMultiplePieChart(null,  // chart title
-        		newSet,               // dataset
-        		TableOrder.BY_ROW,
-        		true,                  // include legend
-        		true,  // include tooltip
-        		false);
+                newSet, // dataset
+                TableOrder.BY_ROW, true, // include legend
+                true, // include tooltip
+                false);
+
+        final MultiplePiePlot mPlot = (MultiplePiePlot) multiChart.getPlot();
+        mPlot.setColumns(5);
+        mPlot.setLimit(0.05);
         
-            final MultiplePiePlot mPlot = (MultiplePiePlot) multiChart.getPlot();
-            final JFreeChart subchart = mPlot.getPieChart();
-            final PiePlot p = (PiePlot) subchart.getPlot();
-            
-            p.setSectionOutlinesVisible(false);
-            p.setLabelGenerator(null);
-            p.setShadowXOffset(0);
-            p.setShadowYOffset(0);
-            
-            subchart.setBorderVisible(false);
-            multiChart.setBorderVisible(false);
+        final JFreeChart subchart = mPlot.getPieChart();
+        final PiePlot p = (PiePlot) subchart.getPlot();
 
-            p.setBackgroundPaint(new Color(0xd6e4f1));
-            subchart.getTitle().setFont(new Font("SansSerif", Font.PLAIN, 12));
+        p.setSectionOutlinesVisible(false);
+        p.setLabelGenerator(null);
+        p.setShadowXOffset(0);
+        p.setShadowYOffset(0);
 
+        subchart.setBorderVisible(false);
+        multiChart.setBorderVisible(false);
 
-            List l = newSet.getColumnKeys();
-            for (int i = 0; i < Math.min(newSet.getColumnCount(), 8); i++) {
-                p.setSectionPaint((Comparable) l.get(i), GetChart.DEFAULT_COLORS[i]);
-            }
+        p.setBackgroundPaint(new Color(0xd6e4f1));
+        subchart.getTitle().setFont(new Font("SansSerif", Font.PLAIN, 12));
 
 
-            return multiChart;
+        List l = newSet.getColumnKeys();
+        for (int i = 0; i < Math.min(newSet.getColumnCount(), 8); i++) {
+            p.setSectionPaint((Comparable) l.get(i), GetChart.DEFAULT_COLORS[i]);
+        }
+
+
+        return multiChart;
     }
 
-	protected JFreeChart createBarChart(HttpServletRequest request, HttpServletResponse response, 
-    		String queryId, CategoryDataset datas, int width, int height, String format, PlotOrientation orientation) throws Exception {
+    protected JFreeChart createBarChart(HttpServletRequest request,
+            HttpServletResponse response, String queryId,
+            CategoryDataset datas, int width, int height, String format,
+            PlotOrientation orientation) throws Exception {
 
-			JFreeChart chart = ChartFactory.createBarChart(null, null, null, datas, orientation,
-					true, true, false);
+        JFreeChart chart = ChartFactory.createBarChart(null, null, null, datas,
+                orientation, true, true, false);
 
-			CategoryPlot plot = (CategoryPlot) chart.getPlot();
-			java.util.List l = datas.getColumnKeys();
-			BarRenderer r = (BarRenderer) plot.getRenderer();
-
-			for (int i = 0; i < Math.min(datas.getColumnCount(), 8); i++) {
-				r.setSeriesPaint(i, GetChart.DEFAULT_COLORS[i]);
-			}
-			r.setBarPainter(new StandardBarPainter());
-			r.setDefaultShadowsVisible(false);
-			r.setDrawBarOutline(false);
-			r.setShadowVisible(false);
-			chart.setBorderVisible(false);
-			plot.setOutlineVisible(false);
-			plot.setBackgroundPaint(new Color(0xd6e4f1));
-
-
-			return chart;
-	}
+        CategoryPlot plot = (CategoryPlot) chart.getPlot();
+        java.util.List l = datas.getColumnKeys();
+        BarRenderer r = (BarRenderer) plot.getRenderer();
+        for (int i = 0; i < Math.min(datas.getColumnCount(), 8); i++) {
+            r.setSeriesPaint(i, GetChart.DEFAULT_COLORS[i]);
+        }
+        r.setBarPainter(new StandardBarPainter());
+        r.setDefaultShadowsVisible(false);
+        r.setDrawBarOutline(false);
+        r.setShadowVisible(false);
+        chart.setBorderVisible(false);
+        plot.setOutlineVisible(false);
+        plot.setBackgroundPaint(new Color(0xd6e4f1));
+        // set sensible marings
+        r.setItemMargin(0);
+        double categoryMargin;
+        if (orientation == PlotOrientation.HORIZONTAL) {
+            categoryMargin = 15.0 / height;
+        } else {
+            categoryMargin = 15.0 / width;
+        }
+        plot.getDomainAxis().setCategoryMargin(categoryMargin);
+        plot.getDomainAxis().setLowerMargin(categoryMargin);
+        plot.getDomainAxis().setUpperMargin(categoryMargin);
+        return chart;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
 	public void getchart(HttpServletRequest request,
