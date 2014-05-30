@@ -113,7 +113,7 @@ App.chart = function() {
         });
         el.resizer.on('resize', function(r,w,h,e) {
             container.resizableCmp.setSize(w, h); 
-            updateChart.defer(100);
+            updateChart.defer(100, this, [{height: h, width: w}]);
         });
     });
 
@@ -122,9 +122,9 @@ App.chart = function() {
         root: 'choropleths_indicators'
     });
 
-    var updateChart = function() {
+    var updateChart = function(size) {
         var id = Ext.id();
-        var url = getChartUrl();
+        var url = getChartUrl(size);
         container.chartImg.update('<img id="' + id + '_img" usemap="#' + id + '" src="' + url + '" />');
 
         container.chartMaparea.getEl().getUpdater().update({
@@ -136,7 +136,7 @@ App.chart = function() {
     /**
      * getChartUrl
      */
-    var getChartUrl = function() {
+    var getChartUrl = function(size) {
         if (App.queryMgr.getQuery().relative) {
             indicatorsStore.filterBy(function(record, id) {
                 if (record.get('name').indexOf('Total') != -1) {
@@ -156,7 +156,9 @@ App.chart = function() {
         }
         var chartType = getChartType();
         var componentSize = container.chartImg.body.getSize();
-        var size = getChartSize(chartType, componentSize);
+        if (size==null) {
+            var size = getChartSize(chartType, componentSize);
+        }
         container.resizableCmp.setSize(size.width, size.height);
         var params = {
             queryId: App.queryId,
@@ -211,25 +213,26 @@ App.chart = function() {
             var rows = App.queryMgr.getNumRows(query);
             var columns = App.queryMgr.getNumCols(query);
             var measures =  query.measure.members.length;
-            height = rows*columns*measures*10;
+            height = rows*columns*measures*10+85;
             // width: same as component
             width = currentSize.width;
         }
         else if (chartType=="piebyrow") {
             var rows = App.queryMgr.getNumRows(query);
-            height = Math.ceil(rows/5)*140;
+            height = Math.ceil(rows/5)*140+30;
             // width: same as component
             width = currentSize.width;
         }
         else if (chartType=="pie") {
+            var rows = App.queryMgr.getNumRows(query);
             var columns = App.queryMgr.getNumCols(query);
-            height = Math.ceil(columns/5)*140;
+            height = Math.ceil(columns/5)*140+Math.ceil(rows/10)*15+20;
             // width: same as component
-            width: currentSize.width;
+            width = currentSize.width;
         }
         else if (chartType=="bar") {
+            height = 400;
             // same as component
-            height = currentSize.height;
             width = currentSize.width;
         }
         if (height==0) { // workaround a corner case where the query has not been loaded yet
